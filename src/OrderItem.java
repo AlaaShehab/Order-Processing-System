@@ -1,8 +1,7 @@
-public class Order {
+public class OrderItem {
 
     private int ISBN;
     private int quantity;
-    private String date;
 
     public int getISBN() {
         return ISBN;
@@ -18,13 +17,5 @@ public class Order {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 }

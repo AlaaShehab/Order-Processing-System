@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class User {
 
     private int userID;
@@ -6,6 +8,12 @@ public class User {
     private String lastName;
     private String email, phoneNumber, shippingAddress;
     private boolean isManager;
+
+    private List<OrderItem> cart;
+
+    public List<OrderItem> getCart() {
+        return cart;
+    }
 
     public int getUserID() {
         return userID;
@@ -71,4 +79,15 @@ public class User {
         isManager = manager;
     }
 
+    public void insertItem(OrderItem item) {
+        cart.add(item);
+    }
+
+    public void removeItem (OrderItem item) {
+        cart.remove(item);
+    }
+
+    public void clearCart () {
+        cart.clear();
+    }
 }
