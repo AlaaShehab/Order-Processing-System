@@ -255,6 +255,4 @@ abstract class UsersActivities {
     abstract void promoteUser(User user);
     abstract void viewSalesReport(User user);
 
-
-
 }

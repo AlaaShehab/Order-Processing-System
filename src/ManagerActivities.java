@@ -32,7 +32,11 @@ public class ManagerActivities extends UsersActivities{
 
     @Override
     void modifyBook(Book book) {
-
+        String query = "UPDATE BOOK SET ISBN = "+ book.getISBN() + ", title = " + book.getTitle()
+                + ", publisher = " + book.getPublisherName() + ", year = " + book.getPublicationYear()
+                + ", price = " + book.getPrice() + ", no_of_copies = " + book.getNoOfCopies()
+                + ", threshold = " + book.getThreshold()
+                + "WHERE ISBN = " + book.getISBN() + ";";
     }
 
     @Override
