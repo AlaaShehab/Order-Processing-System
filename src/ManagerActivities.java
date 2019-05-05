@@ -37,11 +37,23 @@ public class ManagerActivities extends UsersActivities{
                 + ", price = " + book.getPrice() + ", no_of_copies = " + book.getNoOfCopies()
                 + ", threshold = " + book.getThreshold()
                 + "WHERE ISBN = " + book.getISBN() + ";";
+        try {
+            Statement stat = connection.createStatement();
+            ResultSet rs = stat.executeQuery(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     void placeOrder(Book book, int quantity) {
-
+        try {
+            String query = "UPDATE BOOK SET noOfCopies =  " + quantity + "WHERE ISBN = " + book.getISBN() + ";";
+            Statement stat = connection.createStatement();
+            ResultSet rs = stat.executeQuery(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -49,6 +61,7 @@ public class ManagerActivities extends UsersActivities{
         String query = "UPDATE user set isManager = true where email = '" + user.getEmail() + "';";
         try {
             Statement stat = connection.createStatement();
+            ResultSet rs = stat.executeQuery(query);
         } catch (Exception e) {
             e.printStackTrace();
         }

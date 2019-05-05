@@ -1,3 +1,4 @@
+import javax.jws.soap.SOAPBinding;
 import java.util.LinkedList;
 import java.util.List;
 import java.sql.*;
@@ -18,7 +19,17 @@ abstract class UsersActivities {
     }
 
     public void editInfo(User user) {//send info as parameters
-
+        String query = "UPDATE USER SET userID = "+ user.getUserID() + ", password = " + user.getPassword()
+                + ", firstName = " + user.getFirstName() + ", lastName = " + user.getLastName()
+                + ", email = " + user.getEmail() + ", phoneNumber = " + user.getPhoneNumber()
+                + ", shippingAddress = " + user.getShippingAddress()
+                + "WHERE userID = " + user.getUserID() + ";";
+        try {
+            Statement stat = connection.createStatement();
+            ResultSet rs = stat.executeQuery(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Book> searchForBookByISBN(String bookISBN) {
@@ -220,7 +231,17 @@ abstract class UsersActivities {
 
     public void userCheckOut(User user) {
         //place order
-        user.clearCart();
+        try {
+            for (int i = 0; i < user.getCart().size(); i++){
+                String query = "INSERT INTO ORDER VALUES (" + user.getCart().get(i).getISBN()
+                                + ", " + user.getCart().get(i).getQuantity() + ");";
+                Statement stat = connection.createStatement();
+                ResultSet rs = stat.executeQuery(query);
+            }
+            user.clearCart();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void userLogOut(User user){
@@ -246,9 +267,28 @@ abstract class UsersActivities {
         return null;
     }
 
-    public User userSignUp(String email, String password){
-        return null;
+    public boolean userSignUp(User user){
+        String checkQuery = "SELECT email FROM USER WHERE email = " + user.getEmail() + ";";
+        try {
+            Statement stat = connection.createStatement();
+            ResultSet rs = stat.executeQuery(checkQuery);
+            rs.last();
+            if (rs.getRow() != 0) {
+                //Email is used
+                return false;
+            } else {
+                String insertQuery = "INSERT INTO USER VALUES ("+ user.getUserID() + ", " + user.getPassword()
+                        + ", " + user.getFirstName() + ", " + user.getLastName()
+                        + ", " + user.getEmail() + ", " + user.getPhoneNumber()
+                        + ", " + user.getShippingAddress() + ");";
+                rs = stat.executeQuery(insertQuery);
+            }
+        } catch (Exception e) {
+
+        }
+        return true;
     }
+
     abstract void addNewBook(Book book);
     abstract void modifyBook(Book book); //send modified parameters
     abstract void placeOrder(Book book, int quantity); //mlhash lazma
