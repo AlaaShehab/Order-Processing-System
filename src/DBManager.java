@@ -9,7 +9,8 @@ public class DBManager {
         setConnection();
     }
     static private DBManager instance;
-    private String url = "jdbc:mysql://localhost:3306/OrderOnlineProcessing";
+
+    private String url = "jdbc:mysql://localhost:3306/OrderOnlineProcessing?autoReconnect=true&useSSL=false";
     private String userName, password;
     private Connection connection;
 
