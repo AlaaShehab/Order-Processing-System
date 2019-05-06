@@ -68,7 +68,21 @@ public class ManagerActivities extends UsersActivities{
     }
 
     @Override
-    void viewSalesReport(User user) {
+    void viewSalesReport() {
         //Jasber will be used
+        Report report = new Report();
+        report.totalSales();
+    }
+
+    @Override
+    void viewTop5Customers() {
+        Report report = new Report();
+        report.getTop5Customer();
+    }
+
+    @Override
+    void viewTop10BooksSold() {
+        Report report = new Report();
+        report.getTop10Books();
     }
 }
