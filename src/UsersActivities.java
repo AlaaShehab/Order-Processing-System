@@ -32,6 +32,22 @@ abstract class UsersActivities {
         }
     }
 
+    public void addBookToCart(User user, int ISBN, int quantity){
+        // mmkn a-check el awl ezay kan el ISBN mwgod w mmkn n3ml assumption eno msh hyd5l wa7ed msh mwgod
+        OrderItem order = new OrderItem();
+        order.setISBN(ISBN);
+        order.setQuantity(quantity);
+        user.insertItem(order);
+    }
+
+    public void removeBookFromCart(User user, int ISBN, int quantity){
+        // leh hna byb3t el quantity
+        OrderItem order = new OrderItem();
+        order.setISBN(ISBN);
+        order.setQuantity(quantity);
+        user.removeItem(order);
+    }
+
     public List<Book> searchForBookByISBN(String bookISBN) {
         List<Book> books = new ArrayList<Book>();
         try{
