@@ -309,12 +309,12 @@ public class ManagerActivities extends Activities{
 
     @Override
     void addNewBook(Book book) {
-        String query = "Insert into BOOK values (" + book.getISBN() + "," + book.getTitle() + ","
-                + book.getPublisherName() + "," + book.getPublicationYear() + "," + book.getPrice()
-                + "," + book.getNoOfCopies() + "," + book.getThreshold() + ")";
+        String query = "Insert into BOOK values (" + book.getISBN() + ",'" + book.getTitle() + "','"
+                + book.getPublicationYear() + "'," + book.getPrice()
+                + "," + book.getThreshold() + "," + book.getNoOfCopies() + ",'" + book.getPublisherName() + "')";
         try {
             Statement stat = connection.createStatement();
-            ResultSet rs = stat.executeQuery(query);
+            stat.executeUpdate(query);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -322,14 +322,15 @@ public class ManagerActivities extends Activities{
 
     @Override
     void modifyBook(Book book) {
-        String query = "UPDATE BOOK SET ISBN = "+ book.getISBN() + ", title = " + book.getTitle()
-                + ", publisher = " + book.getPublisherName() + ", year = " + book.getPublicationYear()
-                + ", price = " + book.getPrice() + ", no_of_copies = " + book.getNoOfCopies()
-                + ", threshold = " + book.getThreshold()
-                + "WHERE ISBN = " + book.getISBN() + ";";
+        String query = "UPDATE BOOK SET ISBN = "+ book.getISBN() + ", title = '" + book.getTitle()
+                + "', publication_year = '" + book.getPublicationYear()
+                + "', price = " + book.getPrice() + ", threshold = " + book.getThreshold()
+                + ", copies = " + book.getNoOfCopies()
+                + ", publisher_name = '" + book.getPublisherName()
+                + "' WHERE ISBN = " + book.getISBN() + ";";
         try {
             Statement stat = connection.createStatement();
-            ResultSet rs = stat.executeQuery(query);
+            stat.executeUpdate(query);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -338,9 +339,9 @@ public class ManagerActivities extends Activities{
     @Override
     void placeOrder(Book book, int quantity) {
         try {
-            String query = "UPDATE BOOK SET noOfCopies =  " + quantity + "WHERE ISBN = " + book.getISBN() + ";";
+            String query = "UPDATE BOOK SET copies =  " + quantity + " WHERE ISBN = " + book.getISBN() + ";";
             Statement stat = connection.createStatement();
-            ResultSet rs = stat.executeQuery(query);
+            stat.executeUpdate(query);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -348,10 +349,10 @@ public class ManagerActivities extends Activities{
 
     @Override
     void promoteUser(User user) {
-        String query = "UPDATE user set isManager = true where email = '" + user.getEmail() + "';";
+        String query = "UPDATE user set is_manger = 1 where email = '" + user.getEmail() + "';";
         try {
             Statement stat = connection.createStatement();
-            ResultSet rs = stat.executeQuery(query);
+            stat.executeUpdate(query);
         } catch (Exception e) {
             e.printStackTrace();
         }
