@@ -1,32 +1,25 @@
-import javax.jws.soap.SOAPBinding;
-import java.util.LinkedList;
 import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
 
-abstract class UsersActivities {
+class UsersActivities extends Activities  {
 
-    private String url = "jdbc:mysql://localhost:3306/OrderOnlineProcessing";
     private Connection connection;
 
-    UsersActivities () {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(url, "root", "12345");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    UsersActivities() {
+        DBManager dbManager = DBManager.getInstance("root", "root");
+        connection = dbManager.getConnection();
     }
 
     public void editInfo(User user) {//send info as parameters
-        String query = "UPDATE USER SET userID = "+ user.getUserID() + ", password = " + user.getPassword()
-                + ", firstName = " + user.getFirstName() + ", lastName = " + user.getLastName()
-                + ", email = " + user.getEmail() + ", phoneNumber = " + user.getPhoneNumber()
-                + ", shippingAddress = " + user.getShippingAddress()
-                + "WHERE userID = " + user.getUserID() + ";";
+        String query = "UPDATE USER SET user_id = "+ user.getUserID() + ", passowrd = '" + user.getPassword()
+                + "', first_name = '" + user.getFirstName() + "', last_name = '" + user.getLastName()
+                + "', email = '" + user.getEmail() + "', phoneNumber = '" + user.getPhoneNumber()
+                + ", shipping_address = " + user.getShippingAddress()
+                + "' WHERE user_id = " + user.getUserID() + ";";
         try {
             Statement stat = connection.createStatement();
-            ResultSet rs = stat.executeQuery(query);
+            stat.executeUpdate(query);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -221,7 +214,7 @@ abstract class UsersActivities {
             //display price
 
         } catch(Exception e){
-
+            e.printStackTrace();
         }
     }
 
@@ -249,10 +242,10 @@ abstract class UsersActivities {
         //place order
         try {
             for (int i = 0; i < user.getCart().size(); i++){
-                String query = "INSERT INTO ORDER VALUES (" + user.getCart().get(i).getISBN()
-                                + ", " + user.getCart().get(i).getQuantity() + ");";
+                String query = "INSERT INTO ORDER VALUES ('" + user.getCart().get(i).getISBN()
+                                + "', " + user.getCart().get(i).getQuantity() + ");";
                 Statement stat = connection.createStatement();
-                ResultSet rs = stat.executeQuery(query);
+                stat.executeUpdate(query);
             }
             user.clearCart();
         } catch (Exception e) {
@@ -263,15 +256,25 @@ abstract class UsersActivities {
     public void userLogOut(User user){
         user.clearCart();
     }
-
+    //done testing
     public User userSignIn(String email, String password){
         try {
             Statement stat = connection.createStatement();
-            String query = "Select * from Users where email='" + email +"' and password='" + password+"';";
+            String query = "Select * from User where email='" + email +"' and passowrd='" + password+"';";
             ResultSet rs = stat.executeQuery(query);
             if (rs.next()) {
                 System.out.println("Login Sucessfully...");
-                return new User();
+                User user = new User();
+                user.setUserID(rs.getInt("user_id"));
+                user.setManager((short)rs.getInt("is_manger"));
+                user.setEmail(rs.getNString("email"));
+                user.setFirstName(rs.getNString("first_name"));
+                user.setLastName(rs.getNString("last_name"));
+                user.setPassword(rs.getNString("passowrd"));
+                user.setPhoneNumber(rs.getNString("phone_number"));
+                user.setShippingAddress(rs.getNString("shipping_address"));
+                user.setUserName(rs.getNString("user_name"));
+                return user;
             } else {
                 System.out.println("Incorrect username and password");
             }
@@ -284,7 +287,7 @@ abstract class UsersActivities {
     }
 
     public boolean userSignUp(User user){
-        String checkQuery = "SELECT email FROM USER WHERE email = " + user.getEmail() + ";";
+        String checkQuery = "SELECT email FROM USER WHERE email = '" + user.getEmail() + "';";
         try {
             Statement stat = connection.createStatement();
             ResultSet rs = stat.executeQuery(checkQuery);
@@ -293,25 +296,53 @@ abstract class UsersActivities {
                 //Email is used
                 return false;
             } else {
-                String insertQuery = "INSERT INTO USER VALUES ("+ user.getUserID() + ", " + user.getPassword()
-                        + ", " + user.getFirstName() + ", " + user.getLastName()
-                        + ", " + user.getEmail() + ", " + user.getPhoneNumber()
-                        + ", " + user.getShippingAddress() + ");";
-                rs = stat.executeQuery(insertQuery);
+                String insertQuery = "INSERT INTO USER VALUES (" +user.getUserID()+ ",'"+ user.getPassword()
+                        + "', '" + user.getFirstName() + "', '" + user.getLastName()
+                        + "', '" + user.getPhoneNumber() + "', '" + user.getShippingAddress()
+                        + "', " + user.isManager() + ",'" + user.getEmail() + "','" +user.getUserName() +"');";
+                stat.executeUpdate(insertQuery);
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return true;
     }
 
-    abstract void addNewBook(Book book);
-    abstract void modifyBook(Book book); //send modified parameters
-    abstract void placeOrder(Book book, int quantity); //mlhash lazma
-    abstract void promoteUser(User user);
-    abstract void viewSalesReport();
-    abstract void viewTop5Customers();
-    abstract void viewTop10BooksSold();
+    @Override
+    void addNewBook(Book book) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException();
+    }
 
+    @Override
+    void modifyBook(Book book) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    void placeOrder(Book book, int quantity) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException();
+
+    }
+
+    @Override
+    void promoteUser(User user) throws UnsupportedOperationException{
+        throw new UnsupportedOperationException();
+
+    }
+
+    @Override
+    void viewSalesReport() throws UnsupportedOperationException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    void viewTop5Customers() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    void viewTop10BooksSold() {
+        throw new UnsupportedOperationException();
+    }
 
 }

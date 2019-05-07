@@ -1,4 +1,3 @@
-import java.security.PublicKey;
 import java.sql.*;
 
 public class DBManager {
@@ -10,7 +9,7 @@ public class DBManager {
     }
     static private DBManager instance;
 
-    private String url = "jdbc:mysql://localhost:3306/OrderOnlineProcessing?autoReconnect=true&useSSL=false";
+    private String url = "jdbc:mysql://localhost:3306/OrderOnlineProcessing?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true";
     private String userName, password;
     private Connection connection;
 
@@ -23,7 +22,7 @@ public class DBManager {
 
     private void setConnection () {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url, userName, password);
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());

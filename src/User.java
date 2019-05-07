@@ -6,8 +6,8 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
-    private String email, phoneNumber, shippingAddress;
-    private boolean isManager;
+    private String email, phoneNumber, shippingAddress, userName;
+    private short isManager;
 
     private List<OrderItem> cart;
 
@@ -71,11 +71,11 @@ public class User {
         this.shippingAddress = shippingAddress;
     }
 
-    public boolean isManager() {
+    public short isManager() {
         return isManager;
     }
 
-    public void setManager(boolean manager) {
+    public void setManager(short manager) {
         isManager = manager;
     }
 
@@ -90,4 +90,12 @@ public class User {
     public void clearCart () {
         cart.clear();
     }
+
+   public void setUserName (String userName){
+        this.userName = userName;
+   }
+
+   public String getUserName () {
+        return userName;
+   }
 }
