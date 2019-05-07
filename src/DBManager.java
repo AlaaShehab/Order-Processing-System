@@ -1,15 +1,12 @@
-import java.security.PublicKey;
 import java.sql.*;
 
 public class DBManager {
-
     private DBManager(String username, String pass) {
         this.userName = username;
         this.password = pass;
         setConnection();
     }
     static private DBManager instance;
-
     private String url = "jdbc:mysql://localhost:3306/OrderOnlineProcessing?autoReconnect=true&useSSL=false";
     private String userName, password;
     private Connection connection;
