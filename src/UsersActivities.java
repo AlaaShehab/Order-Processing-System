@@ -2,26 +2,39 @@ import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
 
-class UsersActivities extends Activities  {
+class UsersActivities {
 
     private Connection connection;
 
     UsersActivities() {
-        DBManager dbManager = DBManager.getInstance("root", "root");
+        DBManager dbManager = DBManager.getInstance("", "");
         connection = dbManager.getConnection();
     }
 
-    public void editInfo(User user) {//send info as parameters
+    public void editInfo(User user) throws SQLException {//send info as parameters
         String query = "UPDATE USER SET user_id = "+ user.getUserID() + ", passowrd = '" + user.getPassword()
                 + "', first_name = '" + user.getFirstName() + "', last_name = '" + user.getLastName()
                 + "', email = '" + user.getEmail() + "', phoneNumber = '" + user.getPhoneNumber()
                 + ", shipping_address = " + user.getShippingAddress()
                 + "' WHERE user_id = " + user.getUserID() + ";";
         try {
+            connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
             stat.executeUpdate(query);
-        } catch (Exception e) {
+            connection.commit();
+        }  catch (SQLException e) {
             e.printStackTrace();
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch(SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } finally {
+            connection.setAutoCommit(true);
+
         }
     }
 
@@ -41,9 +54,10 @@ class UsersActivities extends Activities  {
         user.removeItem(order);
     }
 
-    public List<Book> searchForBookByISBN(String bookISBN) {
+    public List<Book> searchForBookByISBN(String bookISBN) throws SQLException {
         List<Book> books = new ArrayList<Book>();
         try{
+            connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
             String query = "Select * from BOOK where ISBN ='"+bookISBN+"';";
             ResultSet rs = stat.executeQuery(query);
@@ -68,15 +82,28 @@ class UsersActivities extends Activities  {
                 book.setPublisherName(publisherName);
                 books.add(book);
             }
-        } catch(Exception e){
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch(SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } finally {
+            connection.setAutoCommit(true);
 
         }
         return books;
     }
 
-    public List<Book> searchForBookByTitle(String bookTitle) {
+    public List<Book> searchForBookByTitle(String bookTitle) throws SQLException {
         List<Book> books = new ArrayList<Book>();
         try{
+            connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
             String query = "Select * from BOOK where Title ='"+bookTitle+"';";
             ResultSet rs = stat.executeQuery(query);
@@ -101,15 +128,28 @@ class UsersActivities extends Activities  {
                 book.setPublisherName(publisherName);
                 books.add(book);
             }
-        } catch(Exception e){
+            connection.commit();
+        }  catch (SQLException e) {
+            e.printStackTrace();
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch(SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } finally {
+            connection.setAutoCommit(true);
 
         }
         return books;
     }
 
-    public List<Book> searchForBookByAuthor(String author_name) {
+    public List<Book> searchForBookByAuthor(String author_name) throws SQLException{
         List<Book> books = new ArrayList<Book>();
         try{
+            connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
             String query = "Select * from BOOK NATURAL JOIN AUTHORS where author ='"+author_name+"';";
             ResultSet rs = stat.executeQuery(query);
@@ -134,15 +174,28 @@ class UsersActivities extends Activities  {
                 book.setPublisherName(publisherName);
                 books.add(book);
             }
-        } catch(Exception e){
+            connection.commit();
+        }  catch (SQLException e) {
+            e.printStackTrace();
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch(SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } finally {
+            connection.setAutoCommit(true);
 
         }
         return books;
     }
 
-    public List<Book> searchForBookByCategory(String category) {
+    public List<Book> searchForBookByCategory(String category) throws SQLException {
         List<Book> books = new ArrayList<Book>();
         try{
+            connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
             String query = "Select * from BOOK NATURAL JOIN CATEGORIES where category ='"+category+"';";
             ResultSet rs = stat.executeQuery(query);
@@ -167,15 +220,28 @@ class UsersActivities extends Activities  {
                 book.setPublisherName(publisherName);
                 books.add(book);
             }
-        } catch(Exception e){
+            connection.commit();
+        }  catch (SQLException e) {
+            e.printStackTrace();
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch(SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } finally {
+            connection.setAutoCommit(true);
 
         }
         return books;
     }
 
-    public List<Book> searchForBookByear(String year) {
+    public List<Book> searchForBookByear(String year) throws SQLException {
         List<Book> books = new ArrayList<Book>();
         try{
+            connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
             String query = "Select * from BOOK where publicationYear ='"+year+"';";
             ResultSet rs = stat.executeQuery(query);
@@ -200,27 +266,53 @@ class UsersActivities extends Activities  {
                 book.setPublisherName(publisherName);
                 books.add(book);
             }
-        } catch(Exception e){
+            connection.commit();
+        }  catch (SQLException e) {
+            e.printStackTrace();
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch(SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } finally {
+            connection.setAutoCommit(true);
 
         }
         return books;
     }
 
-    public void viewBookPrice(String ISBN) {
+    public void viewBookPrice(String ISBN) throws SQLException {
         try{
+            connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
             String query = "Select price from BOOK where ISBN='"+ISBN+"';";
             ResultSet rs = stat.executeQuery(query);
             //display price
+            connection.commit();
 
-        } catch(Exception e){
+        }  catch (SQLException e) {
             e.printStackTrace();
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch(SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } finally {
+            connection.setAutoCommit(true);
+
         }
     }
 
-    public void viewTotalPricesInCart(List<OrderItem> cart) {
+    public void viewTotalPricesInCart(List<OrderItem> cart) throws SQLException {
         Double price = 0.0;
         try{
+            connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
             String query = "Select SUM(price) from BOOK where ISBN IN (";
             for (int i = 0; i < cart.size(); i++) {
@@ -233,23 +325,48 @@ class UsersActivities extends Activities  {
             ResultSet rs = stat.executeQuery(query);
             price = rs.getDouble(1);
             //display price
-        } catch(Exception e){
+            connection.commit();
+        }  catch (SQLException e) {
+            e.printStackTrace();
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch(SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } finally {
+            connection.setAutoCommit(true);
 
         }
     }
 
-    public void userCheckOut(User user) {
+    public void userCheckOut(User user) throws SQLException {
         //place order
         try {
+            connection.setAutoCommit(false);
             for (int i = 0; i < user.getCart().size(); i++){
                 String query = "INSERT INTO ORDER VALUES ('" + user.getCart().get(i).getISBN()
                                 + "', " + user.getCart().get(i).getQuantity() + ");";
                 Statement stat = connection.createStatement();
                 stat.executeUpdate(query);
+                connection.commit();
             }
             user.clearCart();
-        } catch (Exception e) {
+        }  catch (SQLException e) {
             e.printStackTrace();
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch(SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } finally {
+            connection.setAutoCommit(true);
+
         }
     }
 
@@ -257,11 +374,13 @@ class UsersActivities extends Activities  {
         user.clearCart();
     }
     //done testing
-    public User userSignIn(String email, String password){
+    public User userSignIn(String email, String password) throws SQLException{
         try {
+            connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
             String query = "Select * from User where email='" + email +"' and passowrd='" + password+"';";
             ResultSet rs = stat.executeQuery(query);
+            connection.commit();
             if (rs.next()) {
                 System.out.println("Login Sucessfully...");
                 User user = new User();
@@ -278,19 +397,32 @@ class UsersActivities extends Activities  {
             } else {
                 System.out.println("Incorrect username and password");
             }
-        } catch (Exception e) {
-            System.out.println(e);
+        }  catch (SQLException e) {
+            e.printStackTrace();
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch(SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } finally {
+            connection.setAutoCommit(true);
+
         }
         //check email and password
         //log in and create new user
         return null;
     }
 
-    public boolean userSignUp(User user){
+    public boolean userSignUp(User user) throws SQLException{
         String checkQuery = "SELECT email FROM USER WHERE email = '" + user.getEmail() + "';";
         try {
+            connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
             ResultSet rs = stat.executeQuery(checkQuery);
+            connection.commit();
             rs.last();
             if (rs.getRow() != 0) {
                 //Email is used
@@ -301,48 +433,22 @@ class UsersActivities extends Activities  {
                         + "', '" + user.getPhoneNumber() + "', '" + user.getShippingAddress()
                         + "', " + user.isManager() + ",'" + user.getEmail() + "','" +user.getUserName() +"');";
                 stat.executeUpdate(insertQuery);
+                connection.commit();
             }
-        } catch (Exception e) {
+        }  catch (SQLException e) {
             e.printStackTrace();
+            if (connection != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    connection.rollback();
+                } catch(SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } finally {
+            connection.setAutoCommit(true);
+
         }
         return true;
     }
-
-    @Override
-    void addNewBook(Book book) throws UnsupportedOperationException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    void modifyBook(Book book) throws UnsupportedOperationException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    void placeOrder(Book book, int quantity) throws UnsupportedOperationException {
-        throw new UnsupportedOperationException();
-
-    }
-
-    @Override
-    void promoteUser(User user) throws UnsupportedOperationException{
-        throw new UnsupportedOperationException();
-
-    }
-
-    @Override
-    void viewSalesReport() throws UnsupportedOperationException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    void viewTop5Customers() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    void viewTop10BooksSold() {
-        throw new UnsupportedOperationException();
-    }
-
 }
