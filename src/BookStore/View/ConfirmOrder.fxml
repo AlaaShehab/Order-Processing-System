@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="273.0" prefWidth="368.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookStore.ConfirmOrderController">
+   <children>
+      <TextField fx:id="ISBN" focusTraversable="false" layoutX="91.0" layoutY="80.0" promptText="Book ISBN" />
+      <Button fx:id="cancelBtn" layoutX="203.0" layoutY="150.0" mnemonicParsing="false" onAction="#closeWindowHandler" text="Cancel" />
+      <Button layoutX="111.0" layoutY="150.0" mnemonicParsing="false" onAction="#confirmOrderHandler" text="Confirm" />
+   </children>
+</AnchorPane>

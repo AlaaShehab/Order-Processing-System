@@ -1,8 +1,10 @@
-import java.util.List;
-import java.sql.*;
-import java.util.ArrayList;
+package Backend;
 
-public class ManagerActivities extends UsersActivities{
+import Backend.DBManager;
+
+import java.sql.*;
+
+public class ManagerActivities extends UsersActivities {
     private Connection connection;
 
     ManagerActivities() {

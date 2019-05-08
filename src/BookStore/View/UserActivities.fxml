@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="714.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookStore.UserActivitiesController">
+   <children>
+      <MenuBar fx:id="menu" prefHeight="32.0" prefWidth="714.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="User">
+            <items>
+              <MenuItem fx:id="editMI" mnemonicParsing="false" onAction="#editProfileHanlder" text="Edit Profile" />
+                  <MenuItem fx:id="promoteMI" mnemonicParsing="false" onAction="#promotUserHandler" text="Promote User" />
+                  <MenuItem fx:id="logoutMI" mnemonicParsing="false" onAction="#logoutHandler" text="Logout" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Book">
+            <items>
+              <MenuItem fx:id="addBMI" mnemonicParsing="false" onAction="#addModiftyBookHanlder" text="Add Book" />
+                  <MenuItem fx:id="modifyMI" mnemonicParsing="false" onAction="#addModiftyBookHanlder" text="Modify Book" />
+                  <MenuItem fx:id="orderMI" mnemonicParsing="false" onAction="#PlaceOrderHandler" text="Place Order" />
+                  <MenuItem fx:id="confirmOrder" mnemonicParsing="false" onAction="#confirmOrderHandler" text="Confirm Order" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Cart">
+            <items>
+              <MenuItem fx:id="cartMI" mnemonicParsing="false" onAction="#CartHandler" text="Manage Cart" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Reports">
+              <items>
+                <MenuItem fx:id="totalSalesMI" mnemonicParsing="false" onAction="#totalSalesHanlder" text="Total Sales" />
+                  <MenuItem fx:id="topCustomerMI" mnemonicParsing="false" onAction="#topCustomerHandler" text="Top 5 Customers" />
+                  <MenuItem fx:id="topBookMI" mnemonicParsing="false" onAction="#topBookHandler" text="Top 10 books" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" />
+        </menus>
+      </MenuBar>
+      <Button fx:id="searchBtn" layoutX="400.0" layoutY="59.0" mnemonicParsing="false" onAction="#SearchBookHandler" text="Serach Book" />
+      <TableView fx:id="booksTable" layoutY="124.0" prefHeight="200.0" prefWidth="714.0">
+        <columns>
+          <TableColumn fx:id="ISBN" prefWidth="62.0" text="ISBN" />
+          <TableColumn fx:id="title" prefWidth="88.0" text="Title" />
+            <TableColumn fx:id="publisher" prefWidth="88.0" text="Publisher" />
+            <TableColumn fx:id="year" prefWidth="74.0" text="Year" />
+            <TableColumn fx:id="copies" prefWidth="63.0" text="Copies" />
+            <TableColumn fx:id="author" prefWidth="137.0" text="Author" />
+            <TableColumn fx:id="category" prefWidth="112.0" text="Category" />
+            <TableColumn fx:id="price" prefWidth="86.0" text="Price" />
+        </columns>
+      </TableView>
+      <Button fx:id="addToCartBtn" layoutX="311.0" layoutY="345.0" mnemonicParsing="false" text="Add to Cart" />
+      <TextField fx:id="searchValue" layoutX="172.0" layoutY="59.0" />
+      <MenuButton fx:id="menuButton" layoutX="24.0" layoutY="59.0" mnemonicParsing="false" text="Search By ">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#setButtonName" text="Book ISBN" />
+          <MenuItem mnemonicParsing="false" onAction="#setButtonName" text="Book Title" />
+            <MenuItem mnemonicParsing="false" onAction="#setButtonName" text="Book Author" />
+            <MenuItem mnemonicParsing="false" onAction="#setButtonName" text="Publication Year" />
+            <MenuItem mnemonicParsing="false" onAction="#setButtonName" text="Category" />
+        </items>
+      </MenuButton>
+   </children>
+</AnchorPane>

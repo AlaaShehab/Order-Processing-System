@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="232.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookStore.PlaceOrderController">
+   <children>
+      <Button fx:id="cancelBtn" layoutX="214.0" layoutY="161.0" mnemonicParsing="false" onAction="#closeWindowHandler" text="Cancel" />
+      <Button layoutX="304.0" layoutY="161.0" mnemonicParsing="false" onAction="#placeOrderHandler" text="Place Order" />
+      <TextField fx:id="ISBN" focusTraversable="false" layoutX="14.0" layoutY="84.0" promptText="Book ISBN" />
+      <TextField fx:id="quantity" layoutX="214.0" layoutY="84.0" promptText="Book Quntity" />
+   </children>
+</AnchorPane>

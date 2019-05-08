@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="573.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookStore.SignUpController">
+   <children>
+      <Button fx:id="signUp" layoutX="470.0" layoutY="491.0" onAction="#signUpHandler" text="SignUp" />
+      <Label fx:id="label" alignment="CENTER" layoutX="289.0" layoutY="30.0" minHeight="16" minWidth="69" text="Welcome" />
+      <TextField fx:id="firstName" layoutX="249.0" layoutY="67.0" />
+      <TextField fx:id="lastName" layoutX="249.0" layoutY="113.0" />
+      <Label layoutX="105.0" layoutY="72.0" text="First Name" />
+      <Label layoutX="105.0" layoutY="118.0" text="Last Name" />
+      <Label layoutX="105.0" layoutY="209.0" text="Password" />
+      <Label layoutX="105.0" layoutY="163.0" text="Username" />
+      <TextField fx:id="password" layoutX="249.0" layoutY="204.0" />
+      <TextField fx:id="username" layoutX="249.0" layoutY="158.0" />
+      <Label layoutX="105.0" layoutY="299.0" text="Phone number" />
+      <Label layoutX="105.0" layoutY="253.0" text="Confirm password" />
+      <TextField fx:id="phone" layoutX="249.0" layoutY="294.0" />
+      <TextField fx:id="cpassword" layoutX="249.0" layoutY="248.0" />
+      <TextField fx:id="address" layoutX="249.0" layoutY="342.0" />
+      <TextField fx:id="email" layoutX="249.0" layoutY="388.0" />
+      <Label layoutX="105.0" layoutY="347.0" text="Shipping Address" />
+      <Label layoutX="105.0" layoutY="393.0" text="Email" />
+      <Button id="backBtn" fx:id="backBtn" layoutX="381.0" layoutY="491.0" onAction="#backHandler" text="Cancel" />
+      <Label layoutX="105.0" layoutY="444.0" text="Manager" />
+      <CheckBox fx:id="manager" layoutX="249.0" layoutY="444.0" mnemonicParsing="false" />
+   </children>
+</AnchorPane>

@@ -1,3 +1,7 @@
+package Backend;
+
+import Backend.OrderItem;
+
 import java.util.List;
 
 public class User {
@@ -91,11 +95,11 @@ public class User {
         cart.clear();
     }
 
-   public void setUserName (String userName){
+    public void setUserName (String userName){
         this.userName = userName;
-   }
+    }
 
-   public String getUserName () {
+    public String getUserName () {
         return userName;
-   }
+    }
 }

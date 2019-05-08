@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookStore.AddModifyBookHandler">
+   <children>
+       <TextField fx:id="ISBN" focusTraversable="false" layoutX="35.0" layoutY="36.0" promptText="Book ISBN" />
+       <TextField fx:id="publisherName" focusTraversable="false" layoutX="35.0" layoutY="95.0" promptText="Publisher Name" />
+       <TextField fx:id="publicationYear" focusTraversable="false" layoutX="262.0" layoutY="95.0" promptText="Publication Year" />
+       <TextField fx:id="category" focusTraversable="false" layoutX="35.0" layoutY="208.0" promptText="Book Category" />
+       <TextField fx:id="title" focusTraversable="false" layoutX="262.0" layoutY="36.0" promptText="Book Title" />
+       <TextField fx:id="author" focusTraversable="false" layoutX="262.0" layoutY="208.0" promptText="Book Author" />
+       <TextField fx:id="price" focusTraversable="false" layoutX="35.0" layoutY="270.0" promptText="Book Price" />
+       <TextField fx:id="noOfCopies" focusTraversable="false" layoutX="35.0" layoutY="150.0" promptText="No Of Copies" />
+       <TextField fx:id="threshold" focusTraversable="false" layoutX="262.0" layoutY="150.0" promptText="Threshold" />
+      <Button fx:id="cancelBtn" layoutX="338.0" layoutY="325.0" mnemonicParsing="false" onAction="#closeWindowHandler" text="Cancel" />
+      <Button fx:id="addBtn" layoutX="419.0" layoutY="325.0" mnemonicParsing="false" onAction="#addBookHandler" text="Add" />
+      <Button fx:id="modifyBtn" layoutX="483.0" layoutY="325.0" mnemonicParsing="false" onAction="#modifyBookHandler" text="Modify" />
+   </children>
+
+</AnchorPane>

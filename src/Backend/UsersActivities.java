@@ -1,3 +1,8 @@
+package Backend;
+
+import Backend.DBManager;
+import Backend.OrderItem;
+
 import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;

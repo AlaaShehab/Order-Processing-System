@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="202.0" prefWidth="341.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookStore.PromoteUserController">
+   <children>
+      <TextField fx:id="emailPromote" focusTraversable="false" layoutX="78.0" layoutY="46.0" promptText="Enter Email" />
+      <Button fx:id="promoteBtn" layoutX="172.0" layoutY="121.0" mnemonicParsing="false" onAction="#promoteUserHandler" text="Promote User" />
+      <Button fx:id="cancelPromoteBtn" layoutX="57.0" layoutY="121.0" mnemonicParsing="false" onAction="#closeWindowHandler" text="Cancel" />
+   </children>
+</AnchorPane>

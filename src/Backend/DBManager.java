@@ -1,3 +1,5 @@
+package Backend;
+
 import java.sql.*;
 
 public class DBManager {
