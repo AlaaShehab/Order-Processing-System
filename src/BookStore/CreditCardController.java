@@ -27,7 +27,6 @@ public class CreditCardController {
     @FXML private TextField securityNo;
     @FXML private TextField expDate;
 
-    //TODO test whether fireback action is called when window is closed not verified
     @FXML
     private void closeWindowHandler (ActionEvent event) throws Exception{
         Stage stage = (Stage) closeBtn.getScene().getWindow();
