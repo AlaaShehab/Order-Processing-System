@@ -27,7 +27,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class UserActivitiesController implements Initializable {
-    //TODO manager is different from normal user
 
     @FXML private MenuBar menu;
     private static User user;
@@ -35,6 +34,13 @@ public class UserActivitiesController implements Initializable {
     private static List<Book> searchedBooks;
 
     private static ManagerActivities mActivity;
+
+    @FXML private MenuItem promoteMI;
+    @FXML private MenuItem addMI;
+    @FXML private MenuItem modifyMI;
+    @FXML private MenuItem orderMI;
+    @FXML private MenuItem confirmMI;
+    @FXML private Menu reportM;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -66,6 +72,14 @@ public class UserActivitiesController implements Initializable {
         SignUpController ucontroller = fxmlLoader.getController();
         user = ucontroller.getUser();
         //disable some of user functions if not manager
+        if (user.isManager() == 0) {
+            promoteMI.setDisable(true);
+            addMI.setDisable(true);
+            modifyMI.setDisable(true);
+            orderMI.setDisable(true);
+            confirmMI.setDisable(true);
+            reportM.setDisable(true);
+        }
 
         //initialize table
         title.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
