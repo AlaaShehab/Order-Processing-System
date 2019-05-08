@@ -15,7 +15,9 @@ public class DBManager {
     private String userName, password;
     private Connection connection;
 
-    public static synchronized DBManager getInstance(String userName, String password) {
+    public static synchronized DBManager getInstance() {
+        String userName = "root";
+        String password = "8121995";
         if(instance == null) {
             instance = new DBManager(userName, password);
         }
