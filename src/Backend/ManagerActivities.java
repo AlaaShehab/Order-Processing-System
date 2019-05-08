@@ -7,12 +7,12 @@ import java.sql.*;
 public class ManagerActivities extends UsersActivities {
     private Connection connection;
 
-    ManagerActivities() {
+    public ManagerActivities() {
         DBManager dbManager = DBManager.getInstance();
         connection = dbManager.getConnection();
     }
 
-    void addNewBook(Book book) throws SQLException {
+    public void addNewBook(Book book) throws SQLException {
         String query = "Insert into Book values (" + book.getISBN() + ",'" + book.getTitle() + "','"
                 + book.getPublicationYear() + "'," + book.getPrice()
                 + "," + book.getThreshold() + "," + book.getNoOfCopies() + ",'" + book.getPublisherName() + "')";
@@ -38,7 +38,7 @@ public class ManagerActivities extends UsersActivities {
         }
     } // fadl goz2 alaa
 
-    void modifyBook(Book book) throws SQLException {
+    public void modifyBook(Book book) throws SQLException {
         String query = "UPDATE Book SET ISBN = "+ book.getISBN() + ", title = '" + book.getTitle()
                 + "', publication_year = '" + book.getPublicationYear()
                 + "', price = " + book.getPrice() + ", threshold = " + book.getThreshold()
@@ -66,8 +66,8 @@ public class ManagerActivities extends UsersActivities {
         }
     } // test
 
-    void promoteUser(User user) throws SQLException {
-        String query = "UPDATE User set is_manger = 1 where email = '" + user.getEmail() + "';";
+    public void promoteUser(String email) throws SQLException {
+        String query = "UPDATE User set is_manger = 1 where email = '" + email + "';";
         try {
             connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
@@ -89,23 +89,23 @@ public class ManagerActivities extends UsersActivities {
         }
     } //test
 
-    void viewSalesReport()  {
+    public void viewSalesReport()  {
         //Jasber will be used
         Report report = new Report();
         report.totalSales();
     }
 
-    void viewTop5Customers() {
+    public void viewTop5Customers() {
         Report report = new Report();
         report.getTop5Customer();
     }
 
-    void viewTop10BooksSold() {
+    public void viewTop10BooksSold() {
         Report report = new Report();
         report.getTop10Books();
     }
 
-    void placeOrder (String ISBN, int quantity) throws SQLException {
+    public void placeOrder (String ISBN, int quantity) throws SQLException {
         try {
             connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
@@ -138,7 +138,7 @@ public class ManagerActivities extends UsersActivities {
         }
     }
 
-    void confirmOrder(String ISBN) throws SQLException {
+    public void confirmOrder(String ISBN) throws SQLException {
         try {
             connection.setAutoCommit(false);
             Statement stat = connection.createStatement();

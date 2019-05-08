@@ -1,7 +1,9 @@
 package BookStore;
 
 import Backend.Book;
+import Backend.ManagerActivities;
 import Backend.User;
+import Backend.UsersActivities;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -79,6 +81,7 @@ public class EditProfileController implements Initializable {
         if (!verification.validName(firstName) || !verification.validName(lastName)
                 || !verification.validateEmaill(email) || !verification.validateMobileNo(phone)) {
             validUser = false;
+            //TODO set error
             return;
         }
         user.setFirstName(firstName.getText());
@@ -90,7 +93,9 @@ public class EditProfileController implements Initializable {
         user.setEmail(email.getText());
 
         if (validUser) {
-            //TODO call backend to edit user
+            UsersActivities activity = new UsersActivities();
+            activity.editInfo(user);
+            //TODO make sure that user returned with no error then set it
             controller.setUser(user);
             closeWindowHandler(event);
         } else {

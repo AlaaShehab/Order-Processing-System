@@ -1,5 +1,6 @@
 package BookStore;
 
+import Backend.ManagerActivities;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,7 +28,8 @@ public class ConfirmOrderController implements Initializable {
 
     @FXML
     private void confirmOrderHandler (ActionEvent event) throws Exception{
-        //TODO sent ISBN to backend
+        ManagerActivities activity = new ManagerActivities();
+        activity.confirmOrder(ISBN.getText());
         closeWindowHandler(event);
     }
 }

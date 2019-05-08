@@ -1,5 +1,6 @@
 package Backend;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,9 +13,9 @@ public class User {
     private String email, phoneNumber, shippingAddress, userName;
     private short isManager;
 
-    private List<OrderItem> cart = new LinkedList<>();
+    private List<Book> cart = new ArrayList<>();
 
-    public List<OrderItem> getCart() {
+    public List<Book> getCart() {
         return cart;
     }
 
@@ -82,12 +83,16 @@ public class User {
         isManager = manager;
     }
 
-    public void insertItem(OrderItem item) {
+    public void insertItem(Book item) {
         cart.add(item);
     }
 
-    public void removeItem (OrderItem item) {
+    public void removeItem (Book item) {
         cart.remove(item);
+    }
+
+    public void removeItem (int index) {
+        cart.remove(index);
     }
 
     public void clearCart () {

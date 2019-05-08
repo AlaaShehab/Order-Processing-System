@@ -47,9 +47,9 @@ public class UsersActivities {
     public void addBookToCart(User user, int ISBN, int quantity){
         // mmkn a-check el awl ezay kan el ISBN mwgod w mmkn n3ml assumption eno msh hyd5l wa7ed msh mwgod
 
-        OrderItem order = new OrderItem();
+        Book order = new Book();
         order.setISBN(ISBN);
-        order.setQuantity(quantity);
+        order.setNoOfCopies(quantity);
         user.insertItem(order);
     }
 
@@ -327,7 +327,7 @@ public class UsersActivities {
         return price;
     }
 
-    public void viewTotalPricesInCart(List<OrderItem> cart) throws SQLException {
+    public double viewTotalPricesInCart(List<Book> cart) throws SQLException {
         Double price = 0.0;
         try{
             connection.setAutoCommit(false);
@@ -358,6 +358,7 @@ public class UsersActivities {
             connection.setAutoCommit(true);
 
         }
+        return price;
     }
 
     public void userCheckOut(User user) throws SQLException {
@@ -378,10 +379,10 @@ public class UsersActivities {
 
                 for (int i = 0; i < user.getCart().size(); i++) {
                     String query_2 = "INSERT INTO Order_item VALUES (" + user.getCart().get(i).getISBN()
-                            + ", " + user.getCart().get(i).getQuantity() + ", " + String.valueOf(order) +");";
+                            + ", " + user.getCart().get(i).getNoOfCopies() + ", " + String.valueOf(order) +");";
                     Statement stat = connection.createStatement();
                     int success_2 =  stat.executeUpdate(query_2);
-                    String updateQuery = "UPDATE BOOK SET copies = copies - " + user.getCart().get(i).getQuantity()
+                    String updateQuery = "UPDATE BOOK SET copies = copies - " + user.getCart().get(i).getNoOfCopies()
                             + " Where ISBN = " + user.getCart().get(i).getISBN() + ";";
                     Statement stat_3 = connection.createStatement();
                     stat_3.executeUpdate(updateQuery);

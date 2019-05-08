@@ -1,6 +1,7 @@
 package BookStore;
 
 import Backend.User;
+import Backend.UsersActivities;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,27 +34,29 @@ public class SignUpController implements Initializable {
     @FXML private TextField email;
     @FXML private CheckBox manager;
 
-    private boolean validUser;
     private UserVerification verification;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        validUser = false;
         verification = new UserVerification();
     }
     @FXML
     private void signUpHandler (ActionEvent event) throws Exception {
 
-        setUser();
+        if (validateUser()) {
+            UsersActivities activity = new UsersActivities();
+            User u = activity.userSignUp(user);
+            if (u != null) {
+                Parent root = FXMLLoader.load(getClass().getResource("View/UserActivities.fxml"));
+                Scene scene = new Scene(root);
+                Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                app_stage.setScene(scene);
+                app_stage.show();
 
-        if (validUser) {
-            //TODO SQL Add user to db and set ID
-            Parent root = FXMLLoader.load(getClass().getResource("View/UserActivities.fxml"));
-            Scene scene = new Scene(root);
-            Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            app_stage.setScene(scene);
-            app_stage.show();
+            } else {
+                //TODO show error msg
+            }
         } else {
             //TODO show error msg
         }
@@ -71,12 +74,15 @@ public class SignUpController implements Initializable {
         return user;
     }
 
-    public void setUser () {
+    public void setUser (User user1) {
+        user = user1;
+    }
+
+    private boolean validateUser () {
         if (!verification.validName(firstName) || !verification.validName(lastName)
             || !verification.validateEmaill(email) || !verification.validateMobileNo(phone)
             || !password.getText().equals(cpassword.getText()) || password.getText().isEmpty()) {
-            validUser = false;
-            return;
+            return false;
         }
         user.setFirstName((String)firstName.getText());
         user.setLastName((String)lastName.getText());
@@ -90,8 +96,7 @@ public class SignUpController implements Initializable {
         } else {
             user.setManager((short)0);
         }
-
-        validUser = true;
+        return true;
     }
 
 }

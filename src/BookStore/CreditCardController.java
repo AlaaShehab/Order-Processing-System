@@ -2,6 +2,7 @@ package BookStore;
 
 import Backend.Book;
 import Backend.User;
+import Backend.UsersActivities;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import javax.jws.soap.SOAPBinding;
 import java.awt.*;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -25,6 +27,7 @@ public class CreditCardController {
     @FXML private TextField securityNo;
     @FXML private TextField expDate;
 
+    //TODO test whether fireback action is called when window is closed not verified
     @FXML
     private void closeWindowHandler (ActionEvent event) throws Exception{
         Stage stage = (Stage) closeBtn.getScene().getWindow();
@@ -40,14 +43,16 @@ public class CreditCardController {
                     "view/UserCart.fxml"));
             Parent root = (Parent) loader.load();
             UserCartController controller = loader.getController();
-            List<Book> list = controller.getCartItems();
+            User user = controller.getUser();
 
-            //TODO SQL code
-            controller.clearList();
-            controller.refresh();
+            UsersActivities activity = new UsersActivities();
+            activity.userCheckOut(user);
+
             Stage stage = (Stage) closeBtn.getScene().getWindow();
             stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
             stage.close();
+        } else {
+            //TODO error
         }
 
     }

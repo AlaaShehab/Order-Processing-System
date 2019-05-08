@@ -1,5 +1,6 @@
 package BookStore;
 
+import Backend.ManagerActivities;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,11 +26,8 @@ public class PromoteUserController implements Initializable {
     }
     @FXML
     private void promoteUserHandler (ActionEvent event) throws Exception{
-        //TODO SQL check that email exists in db
-        /*if yes then return this user and update its manager to true and save it
-          update user set manager = true where username = usernamePromote.getText() and
-          email = emailPromote
-         */
+        ManagerActivities activity = new ManagerActivities();
+        activity.promoteUser(emailPromote.getText());
         closeWindowHandler(event);
     }
 
