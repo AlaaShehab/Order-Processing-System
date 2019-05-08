@@ -61,7 +61,7 @@ public class EditProfileController implements Initializable {
         firstName.setText(user.getFirstName());
         lastName.setText(user.getLastName());
         password.setText(user.getPassword());
-        username.setText(user.getUsername());
+        username.setText(user.getUserName());
         phone.setText(user.getPhoneNumber());
         address.setText(user.getShippingAddress());
         email.setText(user.getEmail());
@@ -84,7 +84,7 @@ public class EditProfileController implements Initializable {
         user.setFirstName(firstName.getText());
         user.setLastName(lastName.getText());
         user.setPassword(password.getText());
-        user.setUsername(username.getText());
+        user.setUserName(username.getText());
         user.setPhoneNumber(phone.getText());
         user.setShippingAddress(address.getText());
         user.setEmail(email.getText());

@@ -22,7 +22,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import org.jfree.ui.about.SystemPropertiesTableModel;
 
 import java.io.IOException;
 import java.net.URL;

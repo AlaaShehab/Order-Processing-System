@@ -80,12 +80,17 @@ public class SignUpController implements Initializable {
         }
         user.setFirstName((String)firstName.getText());
         user.setLastName((String)lastName.getText());
-        user.setUsername(username.getText());
+        user.setUserName(username.getText());
         user.setEmail((String)email.getText());
         user.setPhoneNumber((String)phone.getText());
         user.setPassword((String)password.getText());
         user.setShippingAddress((String)address.getText());
-        user.setManager(manager.isSelected());
+        if (manager.isSelected()) {
+            user.setManager((short) 1);
+        } else {
+            user.setManager((short)0);
+        }
+
         validUser = true;
     }
 
