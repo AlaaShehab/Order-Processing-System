@@ -1,3 +1,5 @@
+package Backend;
+
 import java.util.List;
 public abstract class Activities {
     public abstract void editInfo(User user);

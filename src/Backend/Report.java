@@ -1,4 +1,6 @@
+package Backend;
 
+import Backend.DBManager;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 
