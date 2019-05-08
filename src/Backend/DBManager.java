@@ -4,22 +4,21 @@ import java.sql.*;
 
 public class DBManager {
 
-    private DBManager(String username, String pass) {
-        this.userName = username;
-        this.password = pass;
+    private static String username, password;
+
+    private DBManager() {
         setConnection();
     }
     static private DBManager instance;
 
     private String url = "jdbc:mysql://localhost:3306/OrderOnlineProcessing?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true";
-    private String userName, password;
     private Connection connection;
 
     public static synchronized DBManager getInstance() {
-        String userName = "root";
-        String password = "8121995";
+        username = "root";
+        password = "8121995";
         if(instance == null) {
-            instance = new DBManager(userName, password);
+            instance = new DBManager();
         }
         return instance;
     }
@@ -27,7 +26,7 @@ public class DBManager {
     private void setConnection () {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, userName, password);
+            connection = DriverManager.getConnection(url, username, password);
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();

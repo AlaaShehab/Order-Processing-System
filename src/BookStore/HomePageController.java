@@ -1,5 +1,6 @@
 package BookStore;
 
+import Backend.DBManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,9 +14,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class HomePageController implements Initializable {
+    private DBManager db;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        db = DBManager.getInstance();
     }
 
     @FXML

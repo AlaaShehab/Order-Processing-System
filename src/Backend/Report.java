@@ -15,7 +15,7 @@ public class Report {
     Connection con;
     Statement stmt;
     ResultSet rs;
-    DBManager db = DBManager.getInstance("","");
+    DBManager db = DBManager.getInstance();
 
     public void totalSales () {
         String reportSource =  System.getProperty("user.dir") +"/src/report/totalSales.jrxml";

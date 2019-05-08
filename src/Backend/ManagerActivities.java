@@ -8,7 +8,7 @@ public class ManagerActivities extends UsersActivities {
     private Connection connection;
 
     ManagerActivities() {
-        DBManager dbManager = DBManager.getInstance("root", "root");
+        DBManager dbManager = DBManager.getInstance();
         connection = dbManager.getConnection();
     }
 
