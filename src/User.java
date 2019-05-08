@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 import java.util.List;
 
 public class User {
@@ -9,7 +10,7 @@ public class User {
     private String email, phoneNumber, shippingAddress, userName;
     private short isManager;
 
-    private List<OrderItem> cart;
+    private List<OrderItem> cart = new LinkedList<>();
 
     public List<OrderItem> getCart() {
         return cart;

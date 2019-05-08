@@ -84,7 +84,7 @@ ENGINE = InnoDB;
 -- Table `OrderOnlineProcessing`.`Order`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `OrderOnlineProcessing`.`Order` (
-  `order_id` INT UNSIGNED NOT NULL,
+  `order_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `ISBN` INT UNSIGNED NOT NULL,
   `quantity` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`order_id`, `ISBN`),
@@ -136,21 +136,13 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `OrderOnlineProcessing`.`CUNSTOMER_ORDER` (
   `order_id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NULL,
-  `ISBN` INT UNSIGNED NULL,
   `sale_date` DATE NULL,
   PRIMARY KEY (`order_id`),
   INDEX `fk_user_id_user_idx` (`user_id` ASC),
-  INDEX `fk_book_id_book_idx` (`ISBN` ASC),
   CONSTRAINT `fk_user_id_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `OrderOnlineProcessing`.`User` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_book_id_book`
-    FOREIGN KEY (`ISBN`)
-    REFERENCES `OrderOnlineProcessing`.`Book` (`ISBN`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -185,11 +177,11 @@ CREATE
 	ON `Book` 
 	FOR EACH ROW BEGIN
     declare to_order INT;
-    set to_order = new.copies - new.threshold;
-	
-		IF to_order < 0 THEN
+    set to_order =  new.threshold - new.copies ;
+
+		IF to_order > 0 THEN
             if( exists ( select * from OrderOnlineProcessing.Order where ISBN = new.ISBN)) then
-				update OrderOnlineProcessing.Order set quantity = quantity + to_order;
+				update OrderOnlineProcessing.Order set quantity = quantity + to_order where ISBN = NEW.ISBN;
                
 			else
             INSERT INTO OrderOnlineProcessing.Order VALUES (new.ISBN,to_order);
@@ -217,18 +209,19 @@ BEGIN
 
 declare to_order INT;
 
-set to_order = new.copies - new.threshold;
+set to_order = new.threshold - new.copies ;
 
-if to_order < 0 then 
+if to_order > 0 then 
  if( exists ( select * from OrderOnlineProcessing.Order where ISBN = new.ISBN)) then
-				update OrderOnlineProcessing.Order set quantity = quantity + to_order;
+				update OrderOnlineProcessing.Order set quantity = quantity + to_order where ISBN = NEW.ISBN;
                 
 			else
-	insert into OrderOnlineProcessing.Order values (UUID(), new.ISBN, to_order);
+	insert into OrderOnlineProcessing.Order values (0, new.ISBN, to_order);
             end if;
  end if;
 
 END$$
+
 
 USE `OrderOnlineProcessing`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `OrderOnlineProcessing`.`UpdateQuantity` BEFORE DELETE ON `Order` FOR EACH ROW

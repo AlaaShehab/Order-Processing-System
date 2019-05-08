@@ -6,7 +6,7 @@ public class ManagerActivities extends UsersActivities{
     private Connection connection;
 
     ManagerActivities() {
-        DBManager dbManager = DBManager.getInstance("", "");
+        DBManager dbManager = DBManager.getInstance("root", "root");
         connection = dbManager.getConnection();
     }
 
@@ -34,7 +34,7 @@ public class ManagerActivities extends UsersActivities{
             connection.setAutoCommit(true);
 
         }
-    }
+    } // fadl goz2 alaa
 
     void modifyBook(Book book) throws SQLException {
         String query = "UPDATE Book SET ISBN = "+ book.getISBN() + ", title = '" + book.getTitle()
@@ -62,30 +62,7 @@ public class ManagerActivities extends UsersActivities{
             connection.setAutoCommit(true);
 
         }
-    }
-
-    void placeOrder(Book book, int quantity) throws SQLException {
-        try {
-            connection.setAutoCommit(false);
-            String query = "UPDATE Book SET copies =  " + quantity + " WHERE ISBN = " + book.getISBN() + ";";
-            Statement stat = connection.createStatement();
-            stat.executeUpdate(query);
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            if (connection != null) {
-                try {
-                    System.err.print("Transaction is being rolled back");
-                    connection.rollback();
-                } catch(SQLException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        } finally {
-            connection.setAutoCommit(true);
-
-        }
-    }
+    } // test
 
     void promoteUser(User user) throws SQLException {
         String query = "UPDATE User set is_manger = 1 where email = '" + user.getEmail() + "';";
@@ -108,7 +85,7 @@ public class ManagerActivities extends UsersActivities{
             connection.setAutoCommit(true);
 
         }
-    }
+    } //test
 
     void viewSalesReport()  {
         //Jasber will be used
@@ -165,7 +142,7 @@ public class ManagerActivities extends UsersActivities{
             Statement stat = connection.createStatement();
             String query = "";
 
-            query = "Delete from Order where ISBN = " + ISBN + ";";
+            query = "Delete from `Order` where ISBN = " + ISBN + ";";
             int number = stat.executeUpdate(query);
             connection.commit();
         } catch (SQLException e) {
