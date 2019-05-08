@@ -1,5 +1,6 @@
 package BookStore;
 
+import Backend.ManagerActivities;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,7 +29,8 @@ public class PlaceOrderController implements Initializable {
 
     @FXML
     private void placeOrderHandler (ActionEvent event) throws Exception{
-        //TODO sent ISBN and quantity to backend
+        ManagerActivities activity = new ManagerActivities();
+        activity.placeOrder(ISBN.getText(), Integer.parseInt(quantity.getText()));
         closeWindowHandler(event);
     }
 }

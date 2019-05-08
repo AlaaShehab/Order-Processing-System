@@ -1,6 +1,7 @@
 package BookStore;
 
 import Backend.Book;
+import Backend.ManagerActivities;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -38,14 +39,16 @@ public class AddModifyBookHandler implements Initializable {
     @FXML
     private void addBookHandler (ActionEvent event) throws Exception{
         Book book = getBook();
-        //TODO SQL add book
+        ManagerActivities activities = new ManagerActivities();
+        activities.addNewBook(book);
         closeWindowHandler(event);
     }
 
     @FXML
     private void modifyBookHandler (ActionEvent event) throws Exception{
         Book book = getBook();
-        //TODO SQL modify book
+        ManagerActivities activities = new ManagerActivities();
+        activities.modifyBook(book);
         closeWindowHandler(event);
     }
 

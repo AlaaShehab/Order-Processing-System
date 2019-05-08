@@ -2,6 +2,8 @@ package BookStore;
 
 import Backend.Book;
 import Backend.OrderItem;
+import Backend.User;
+import Backend.UsersActivities;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -32,8 +34,6 @@ import java.util.ResourceBundle;
 
 public class UserCartController implements Initializable {
 
-    private static List<Book> cartItems = new ArrayList<Book>();
-
     @FXML
     private TableView cartTable;
 
@@ -47,6 +47,8 @@ public class UserCartController implements Initializable {
 
     @FXML private Label totalCartPrice;
 
+    private static User user;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         title.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
@@ -57,17 +59,33 @@ public class UserCartController implements Initializable {
 
         removeBtn.setOnAction(new DeleteButtonListener());
 
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(
+                "view/UserActivities.fxml"));
+        Parent root;
+        try {
+            root = (Parent) loader.load();
+        } catch (Exception e) {
+            System.out.println("cannot load");
+        }
+
+        UserActivitiesController controller = loader.getController();
+        user = controller.getUser();
+
         //this is just for testing
       //  dummyTrial();
         refresh ();
     }
 
     private void calculatePrice () {
-        DecimalFormat df = new DecimalFormat(".###");
+        UsersActivities activity = new UsersActivities();
         double price = 0.0;
-        for (int i = 0; i < cartItems.size(); i++) {
-            price += cartItems.get(i).getPrice() * cartItems.get(i).getNoOfCopies();
+        try {
+            price = activity.viewTotalPricesInCart(user.getCart());
+        } catch (Exception e) {
+
         }
+        DecimalFormat df = new DecimalFormat(".###");
         totalCartPrice.setText(df.format(price)+ " $");
     }
 
@@ -83,15 +101,16 @@ public class UserCartController implements Initializable {
     }
 
     public void addItemToCart (Book book) {
-        cartItems.add(book);
+
+        user.insertItem(book);
     }
 
     public List<Book> getCartItems () {
-        return cartItems;
+        return user.getCart();
     }
 
     public void clearList () {
-        cartItems.clear();
+        user.clearCart();
     }
 
     public void refresh () {
@@ -100,19 +119,8 @@ public class UserCartController implements Initializable {
         calculatePrice();
     }
     private ObservableList getTableData() {
-        ObservableList data = FXCollections.observableList(cartItems);
+        ObservableList data = FXCollections.observableList(user.getCart());
         return data;
-    }
-
-    private void dummyTrial () {
-        cartItems.add(new Book("The Thief",1, "Fuminori Nakamura", 26.5, 5));
-        cartItems.add(new Book("Of Human Bondage",2, "Somerset Maugham", 58, 4));
-        cartItems.add(new Book("The Bluest Eye",3, "Toni Morrison", 25, 1));
-        addItemToCart(new Book("by the sea", 1, "a@example.com", 26.5, 1));
-        addItemToCart(new Book("In the wind", 2, "b@example.com", 85.69, 4));
-        addItemToCart(new Book("Bla bla bla", 3, "c@example.com", 78.4, 2));
-        addItemToCart(new Book("Just anything", 4, "d@example.com", 41.5, 3));
-        addItemToCart(new Book("Write what", 5, "e@example.com", 15.0, 1));
     }
 
     @FXML
@@ -129,14 +137,18 @@ public class UserCartController implements Initializable {
         public void handle(Event event){
 
             int ix = cartTable.getSelectionModel().getSelectedIndex();
-            if (ix > cartItems.size()) {
+            if (ix > user.getCart().size()) {
                 refresh();
                 return;
             }
             Book book = (Book) cartTable.getSelectionModel().getSelectedItem();
-            cartItems.remove(ix);
+            user.removeItem(ix);
             refresh();
         }
+    }
+
+    public User getUser () {
+        return user;
     }
 
     private class CloseWindowListener implements EventHandler<WindowEvent> {

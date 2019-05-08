@@ -1,7 +1,9 @@
 package BookStore;
 
 import Backend.Book;
+import Backend.ManagerActivities;
 import Backend.User;
+import Backend.UsersActivities;
 import com.sun.org.apache.regexp.internal.RE;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,15 +27,24 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class UserActivitiesController implements Initializable {
-    //TODO manager is different from normal user
 
     @FXML private MenuBar menu;
     private static User user;
 
     private static List<Book> searchedBooks;
 
+    private static ManagerActivities mActivity;
+
+    @FXML private MenuItem promoteMI;
+    @FXML private MenuItem addMI;
+    @FXML private MenuItem modifyMI;
+    @FXML private MenuItem orderMI;
+    @FXML private MenuItem confirmMI;
+    @FXML private Menu reportM;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        mActivity = new ManagerActivities();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(
                 "view/SignIn.fxml"));
@@ -61,6 +72,14 @@ public class UserActivitiesController implements Initializable {
         SignUpController ucontroller = fxmlLoader.getController();
         user = ucontroller.getUser();
         //disable some of user functions if not manager
+        if (user.isManager() == 0) {
+            promoteMI.setDisable(true);
+            addMI.setDisable(true);
+            modifyMI.setDisable(true);
+            orderMI.setDisable(true);
+            confirmMI.setDisable(true);
+            reportM.setDisable(true);
+        }
 
         //initialize table
         title.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
@@ -76,8 +95,6 @@ public class UserActivitiesController implements Initializable {
 
         //just for testing
         searchedBooks = new ArrayList<>();
-        dummyData();
-
 
     }
 
@@ -166,17 +183,17 @@ public class UserActivitiesController implements Initializable {
 
     @FXML
     private void totalSalesHanlder (ActionEvent event) throws Exception{
-        //TODO just call backend
+        mActivity.viewSalesReport();
     }
 
     @FXML
     private void topCustomerHandler (ActionEvent event) throws Exception{
-        //TODO just call backend
+        mActivity.viewTop5Customers();
     }
 
     @FXML
     private void topBookHandler (ActionEvent event) throws Exception{
-        //TODO just call backend
+        mActivity.viewTop10BooksSold();
     }
 
 
@@ -200,18 +217,18 @@ public class UserActivitiesController implements Initializable {
 
     @FXML
     private void SearchBookHandler (ActionEvent event) throws Exception{
-
+        UsersActivities uActivity = new UsersActivities();
 
         if (menuItemSelected.equals("Book ISBN")) {
-            //TODO call from backend with string value from searchValue
+            searchedBooks = uActivity.searchForBookByISBN(searchValue.getText());
         } else if (menuItemSelected.equals("Book Title")) {
-
+            searchedBooks = uActivity.searchForBookByTitle(searchValue.getText());
         } else if (menuItemSelected.equals("Book Author")) {
-
+            searchedBooks = uActivity.searchForBookByAuthor(searchValue.getText());
         } else if (menuItemSelected.equals("Publication Year")) {
-
+            searchedBooks = uActivity.searchForBookByear(searchValue.getText());
         } else {
-
+            searchedBooks = uActivity.searchForBookByCategory(searchValue.getText());
         }
 
         booksTable.setItems(FXCollections.observableList(new ArrayList<>()));
@@ -230,9 +247,6 @@ public class UserActivitiesController implements Initializable {
         return data;
     }
 
-    public void setSearchedBooks (List<Book> books) {
-        searchedBooks = books;
-    }
     public List<Book> getSearchedBooks () {
         return searchedBooks;
     }
@@ -240,22 +254,13 @@ public class UserActivitiesController implements Initializable {
     private class AddItemsListener implements EventHandler {
         @Override
         public void handle(Event event){
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource(
-                    "view/UserCart.fxml"));
-            Parent root;
-            try {
-                root = (Parent) loader.load();
-            } catch (Exception e) {
-
-            }
-            UserCartController controller = loader.getController();
 
             int ix = booksTable.getSelectionModel().getSelectedIndex();
             Book book = (Book) booksTable.getSelectionModel().getSelectedItem();
             int quantity = showInputTextDialog();
             book.setNoOfCopies(quantity);
-            controller.addItemToCart(book);
+            user.insertItem(book);
+
         }
         private int showInputTextDialog() {
 
@@ -269,15 +274,5 @@ public class UserActivitiesController implements Initializable {
 
             return Integer.parseInt(result.get());
         }
-    }
-    private void dummyData () {
-        searchedBooks.add(new Book("The Thief",1, "Fuminori Nakamura", 26.5, 5));
-        searchedBooks.add(new Book("Of Human Bondage",2, "Somerset Maugham", 58, 4));
-        searchedBooks.add(new Book("The Bluest Eye",3, "Toni Morrison", 25, 1));
-        searchedBooks.add((new Book("by the sea", 1, "a@example.com", 26.5, 1)));
-        searchedBooks.add((new Book("In the wind", 2, "b@example.com", 85.69, 4)));
-        searchedBooks.add((new Book("Bla bla bla", 3, "c@example.com", 78.4, 2)));
-        searchedBooks.add((new Book("Just anything", 4, "d@example.com", 41.5, 3)));
-        searchedBooks.add((new Book("Write what", 5, "e@example.com", 15.0, 1)));
     }
 }

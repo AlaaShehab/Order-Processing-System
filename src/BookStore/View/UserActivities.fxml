@@ -19,10 +19,10 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Book">
             <items>
-              <MenuItem fx:id="addBMI" mnemonicParsing="false" onAction="#addModiftyBookHanlder" text="Add Book" />
+              <MenuItem fx:id="addMI" mnemonicParsing="false" onAction="#addModiftyBookHanlder" text="Add Book" />
                   <MenuItem fx:id="modifyMI" mnemonicParsing="false" onAction="#addModiftyBookHanlder" text="Modify Book" />
                   <MenuItem fx:id="orderMI" mnemonicParsing="false" onAction="#PlaceOrderHandler" text="Place Order" />
-                  <MenuItem fx:id="confirmOrder" mnemonicParsing="false" onAction="#confirmOrderHandler" text="Confirm Order" />
+                  <MenuItem fx:id="confirmMI" mnemonicParsing="false" onAction="#confirmOrderHandler" text="Confirm Order" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Cart">
@@ -30,7 +30,7 @@
               <MenuItem fx:id="cartMI" mnemonicParsing="false" onAction="#CartHandler" text="Manage Cart" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Reports">
+            <Menu fx:id="reportM" mnemonicParsing="false" text="Reports">
               <items>
                 <MenuItem fx:id="totalSalesMI" mnemonicParsing="false" onAction="#totalSalesHanlder" text="Total Sales" />
                   <MenuItem fx:id="topCustomerMI" mnemonicParsing="false" onAction="#topCustomerHandler" text="Top 5 Customers" />
