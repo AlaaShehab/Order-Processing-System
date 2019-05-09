@@ -18,10 +18,11 @@ public class UsersActivities {
     }
 
     public void editInfo(User user) throws SQLException {//send info as parameters
+        // TODO print error message in gui when modifying email with existing value
         String query = "UPDATE USER SET user_id = "+ user.getUserID() + ", passowrd = '" + user.getPassword()
                 + "', first_name = '" + user.getFirstName() + "', last_name = '" + user.getLastName()
-                + "', email = '" + user.getEmail() + "', phoneNumber = '" + user.getPhoneNumber()
-                + ", shipping_address = " + user.getShippingAddress()
+                + "', email = '" + user.getEmail() + "', phone_number = '" + user.getPhoneNumber()
+                + "', shipping_address = '" + user.getShippingAddress()
                 + "' WHERE user_id = " + user.getUserID() + ";";
         try {
             connection.setAutoCommit(false);
@@ -42,7 +43,7 @@ public class UsersActivities {
             connection.setAutoCommit(true);
 
         }
-    } // test
+    }
 
     public List<Book> searchForBookByISBN(String bookISBN) throws SQLException {
         List<Book> books = new ArrayList<Book>();
@@ -473,4 +474,5 @@ public class UsersActivities {
         }
         return user;
     }
+
 }

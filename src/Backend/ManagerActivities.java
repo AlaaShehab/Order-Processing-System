@@ -13,14 +13,25 @@ public class ManagerActivities extends UsersActivities {
     }
 
     public void addNewBook(Book book) throws SQLException {
+        // TODO fadl part el publisher
         String query = "Insert into Book values (" + book.getISBN() + ",'" + book.getTitle() + "','"
                 + book.getPublicationYear() + "'," + book.getPrice()
                 + "," + book.getThreshold() + "," + book.getNoOfCopies() + ",'" + book.getPublisherName() + "')";
         try {
             connection.setAutoCommit(false);
-
             Statement stat = connection.createStatement();
+            Statement stat1 = connection.createStatement();
+            Statement stat2 = connection.createStatement();
             stat.executeUpdate(query);
+            for (int i = 0; i < book.getAuthors().size(); i++) {
+                String author_query = "Insert into author values ('" + book.getAuthors().get(i) +"', " + book.getISBN() + ");";
+                stat1.executeUpdate(author_query);
+            }
+            for (int i = 0; i < book.getCategories().size(); i++) {
+                String category_query = "Insert into category values ('" + book.getCategories().get(i) +
+                                        "', " + book.getISBN() + ");";
+                stat2.executeUpdate(category_query);
+            }
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -36,10 +47,10 @@ public class ManagerActivities extends UsersActivities {
             connection.setAutoCommit(true);
 
         }
-    } // fadl goz2 alaa
+    }
 
     public void modifyBook(Book book) throws SQLException {
-        String query = "UPDATE Book SET ISBN = "+ book.getISBN() + ", title = '" + book.getTitle()
+        String query = "UPDATE Book SET title = '" + book.getTitle()
                 + "', publication_year = '" + book.getPublicationYear()
                 + "', price = " + book.getPrice() + ", threshold = " + book.getThreshold()
                 + ", copies = " + book.getNoOfCopies()
@@ -64,7 +75,7 @@ public class ManagerActivities extends UsersActivities {
             connection.setAutoCommit(true);
 
         }
-    } // test
+    }
 
     public void promoteUser(String email) throws SQLException {
         String query = "UPDATE User set is_manger = 1 where email = '" + email + "';";
@@ -87,7 +98,7 @@ public class ManagerActivities extends UsersActivities {
             connection.setAutoCommit(true);
 
         }
-    } //test
+    }
 
     public void viewSalesReport()  {
         //Jasber will be used

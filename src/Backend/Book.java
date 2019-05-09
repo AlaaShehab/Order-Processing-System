@@ -16,7 +16,7 @@ public class Book {
     private List<String> authors;
     private List<String> categories;
 
-    //for my use
+    //for gui use
     private String authorStr;
     private String categoryStr;
 
