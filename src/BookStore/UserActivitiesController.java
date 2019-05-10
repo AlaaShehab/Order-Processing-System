@@ -129,7 +129,7 @@ public class UserActivitiesController implements Initializable {
         //first we remove all lists in the cart
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(
-                "view/HomePage.fxml"));
+                "view/UserCart.fxml"));
         Parent root = (Parent) loader.load();
         UserCartController controller = loader.getController();
         controller.clearList();
