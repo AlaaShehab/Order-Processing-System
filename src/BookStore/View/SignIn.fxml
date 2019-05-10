@@ -10,9 +10,9 @@
         <children>
             <Button fx:id="button" layoutX="466.0" layoutY="303.0" onAction="#signInHandler" text="Login" />
             <Label fx:id="label" alignment="CENTER" layoutX="286.0" layoutY="125.0" minHeight="16" minWidth="69" text="Welcome" />
-            <TextField fx:id="username" layoutX="227.0" layoutY="157.0" />
+            <TextField fx:id="email" layoutX="227.0" layoutY="157.0" />
             <TextField fx:id="password" layoutX="227.0" layoutY="203.0" />
-            <Label layoutX="150.0" layoutY="162.0" text="Username" />
+            <Label layoutX="150.0" layoutY="162.0" text="Email" />
             <Label layoutX="150.0" layoutY="207.0" text="Password" />
             <Label fx:id="invalid_label" layoutX="221.0" layoutY="308.0" prefHeight="21.0" prefWidth="200.0" text="Invalid username or password" textFill="#ee0404" visible="false" />
       <Button id="backBtn" fx:id="button1" layoutX="382.0" layoutY="303.0" onAction="#backHandler" text="Cancel" />
