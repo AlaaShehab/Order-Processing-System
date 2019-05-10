@@ -393,12 +393,12 @@ public class UsersActivities {
         user.clearCart();
     }
 
-    public User userSignIn(String email, String password) throws SQLException{
+    public User userSignIn(String username, String password) throws SQLException{
         User user = new User();
         try {
             connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
-            String query = "Select * from User where email='" + email +"' and passowrd='" + password+"';";
+            String query = "Select * from User where user_name='" + username +"' and passowrd='" + password+"';";
             ResultSet rs = stat.executeQuery(query);
             connection.commit();
             if (rs.next()) {
@@ -473,4 +473,5 @@ public class UsersActivities {
         }
         return user;
     }
+
 }
