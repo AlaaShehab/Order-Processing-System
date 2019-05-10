@@ -125,12 +125,7 @@ public class UserActivitiesController implements Initializable {
     @FXML
     private void logoutHandler (ActionEvent event) throws Exception{
         //first we remove all lists in the cart
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource(
-                "view/UserCart.fxml"));
-        Parent root = (Parent) loader.load();
-        UserCartController controller = loader.getController();
-        controller.clearList();
+        user.clearCart();
 
         //then we return to homepage
         Parent parent = FXMLLoader.load(getClass().getResource("View/HomePage.fxml"));
