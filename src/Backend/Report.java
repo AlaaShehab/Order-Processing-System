@@ -26,7 +26,7 @@ public class Report {
         try {
             Connection con;
 
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             con=db.getConnection();
 
 
@@ -51,7 +51,7 @@ public class Report {
         try {
             Connection con;
 
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             con=db.getConnection();
             JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, con);
@@ -74,7 +74,7 @@ public class Report {
         try {
             Connection con;
 
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             con=db.getConnection();
             JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, con);

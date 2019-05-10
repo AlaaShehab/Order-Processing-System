@@ -15,9 +15,10 @@ public class UsersActivities {
         DBManager dbManager = DBManager.getInstance();
         connection = dbManager.getConnection();
     }
-
+//Done testing
     public void editInfo(User user) throws SQLException {//send info as parameters
-        String query = "UPDATE User SET user_id = "+ user.getUserID() + ", passowrd = '" + user.getPassword()
+        // TODO select before update
+        String query = "UPDATE User SET username = '"+ user.getUserName() + "', passowrd = '" + user.getPassword()
                 + "', first_name = '" + user.getFirstName() + "', last_name = '" + user.getLastName()
                 + "', email = '" + user.getEmail() + "', phone_number = '" + user.getPhoneNumber()
                 + "', shipping_address = '" + user.getShippingAddress()
@@ -42,7 +43,7 @@ public class UsersActivities {
 
         }
     }
-
+//Done testing
     public List<Book> searchForBookByISBN(String bookISBN) throws SQLException {
         List<Book> books = new ArrayList<Book>();
         try{
@@ -50,6 +51,7 @@ public class UsersActivities {
             Statement stat = connection.createStatement();
             String query = "Select * from Book where ISBN ="+bookISBN+";";
             ResultSet rs = stat.executeQuery(query);
+
             while (rs.next()) {
                 int ISBN, noOfCopies, threshold, publicationYear;
                 String title, publisherName;
@@ -71,6 +73,18 @@ public class UsersActivities {
                 book.setTitle(title);
                 book.setPublisherName(publisherName);
                 books.add(book);
+            }
+            for (Book book : books) {
+                String query2 = "Select distinct  author_name from Author where ISBN =" + book.getISBN() + ";";
+                ResultSet rs2 = stat.executeQuery(query2);
+                while (rs2.next()) {
+                    book.addAuthor(rs2.getString(1));
+                }
+                String query3 = "Select distinct  Category_Name from Category where ISBN =" + book.getISBN() + ";";
+                ResultSet rs3 = stat.executeQuery(query3);
+                while (rs3.next()) {
+                    book.addCategory(rs3.getString(1));
+                }
             }
             connection.commit();
         } catch (SQLException e) {
@@ -119,6 +133,18 @@ public class UsersActivities {
                 book.setPublisherName(publisherName);
                 books.add(book);
             }
+            for (Book book : books) {
+                String query2 = "Select distinct  author_name from Author where ISBN =" + book.getISBN() + ";";
+                ResultSet rs2 = stat.executeQuery(query2);
+                while (rs2.next()) {
+                    book.addAuthor(rs2.getString(1));
+                }
+                String query3 = "Select distinct  Category_Name from Category where ISBN =" + book.getISBN() + ";";
+                ResultSet rs3 = stat.executeQuery(query3);
+                while (rs3.next()) {
+                    book.addCategory(rs3.getString(1));
+                }
+            }
             connection.commit();
         }  catch (SQLException e) {
             e.printStackTrace();
@@ -165,6 +191,18 @@ public class UsersActivities {
                 book.setTitle(title);
                 book.setPublisherName(publisherName);
                 books.add(book);
+            }
+            for (Book book : books) {
+                String query2 = "Select distinct  author_name from Author where ISBN =" + book.getISBN() + ";";
+                ResultSet rs2 = stat.executeQuery(query2);
+                while (rs2.next()) {
+                    book.addAuthor(rs2.getString(1));
+                }
+                String query3 = "Select distinct  Category_Name from Category where ISBN =" + book.getISBN() + ";";
+                ResultSet rs3 = stat.executeQuery(query3);
+                while (rs3.next()) {
+                    book.addCategory(rs3.getString(1));
+                }
             }
             connection.commit();
         }  catch (SQLException e) {
@@ -213,6 +251,18 @@ public class UsersActivities {
                 book.setPublisherName(publisherName);
                 books.add(book);
             }
+            for (Book book : books) {
+                String query2 = "Select distinct  author_name from Author where ISBN =" + book.getISBN() + ";";
+                ResultSet rs2 = stat.executeQuery(query2);
+                while (rs2.next()) {
+                    book.addAuthor(rs2.getString(1));
+                }
+                String query3 = "Select distinct  Category_Name from Category where ISBN =" + book.getISBN() + ";";
+                ResultSet rs3 = stat.executeQuery(query3);
+                while (rs3.next()) {
+                    book.addCategory(rs3.getString(1));
+                }
+            }
             connection.commit();
         }  catch (SQLException e) {
             e.printStackTrace();
@@ -260,6 +310,18 @@ public class UsersActivities {
                 book.setPublisherName(publisherName);
                 books.add(book);
             }
+            for (Book book : books) {
+                String query2 = "Select distinct  author_name from Author where ISBN =" + book.getISBN() + ";";
+                ResultSet rs2 = stat.executeQuery(query2);
+                while (rs2.next()) {
+                    book.addAuthor(rs2.getString(1));
+                }
+                String query3 = "Select distinct  Category_Name from Category where ISBN =" + book.getISBN() + ";";
+                ResultSet rs3 = stat.executeQuery(query3);
+                while (rs3.next()) {
+                    book.addCategory(rs3.getString(1));
+                }
+            }
             connection.commit();
         }  catch (SQLException e) {
             e.printStackTrace();
@@ -277,7 +339,7 @@ public class UsersActivities {
         }
         return books;
     }
-
+//Done testing
     public double viewBookPrice(String ISBN) throws SQLException {
         double price = 0.0;
         try{
@@ -308,8 +370,10 @@ public class UsersActivities {
         }
         return price;
     }
-
+//Done testing
     public double viewTotalPricesInCart(List<Book> cart) throws SQLException {
+        if(cart.isEmpty())
+            return 0.0;
         Double price = 0.0;
         try{
             connection.setAutoCommit(false);
@@ -364,7 +428,7 @@ public class UsersActivities {
         }
         return price;
     }
-
+//Done testing
     public void userCheckOut(User user) throws SQLException {
         //place order
         try {
@@ -413,7 +477,7 @@ public class UsersActivities {
     public void userLogOut(User user){
         user.clearCart();
     }
-
+//Done testing
     public User userSignIn(String email, String password) throws SQLException{
         User user = new User();
         try {
@@ -457,7 +521,7 @@ public class UsersActivities {
         //log in and create new user
         return user;
     }
-
+//Done testing
     public User userSignUp(User user) throws SQLException{
         String checkQuery = "SELECT email FROM User WHERE email = '" + user.getEmail() + "';";
         try {

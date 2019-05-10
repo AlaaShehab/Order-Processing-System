@@ -230,7 +230,7 @@ USE `OrderOnlineProcessing`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `OrderOnlineProcessing`.`UpdateQuantity` BEFORE DELETE ON `Order` FOR EACH ROW
 BEGIN
 
-update book set copies = copies + old.quantity where ISBN = old.ISBN;
+update Book set copies = copies + old.quantity where ISBN = old.ISBN;
 
 END$$
 

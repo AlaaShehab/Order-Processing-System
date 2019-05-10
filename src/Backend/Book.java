@@ -114,6 +114,7 @@ public class Book {
     }
 
     public String getAuthorStr () {
+        authorStr="";
 
         for (int i = 0; i < authors.size(); i++) {
             authorStr += authors.get(i);
@@ -125,6 +126,7 @@ public class Book {
     }
 
     public String getCategoryStr () {
+        categoryStr="";
         for (int i = 0; i < categories.size(); i++) {
             categoryStr += categories.get(i);
             if (i != categories.size() - 1) {

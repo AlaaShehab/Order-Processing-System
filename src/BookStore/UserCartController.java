@@ -61,7 +61,7 @@ public class UserCartController implements Initializable {
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(
-                "view/UserActivities.fxml"));
+                "View/UserActivities.fxml"));
         Parent root;
         try {
             root = (Parent) loader.load();

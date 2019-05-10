@@ -77,7 +77,7 @@ public class EditProfileController implements Initializable {
 
     @FXML
     private void EditProfileHandler (ActionEvent event) throws Exception{
-        boolean validUser = false;
+        boolean validUser = true;
         if (!verification.validName(firstName) || !verification.validName(lastName)
                 || !verification.validateEmaill(email) || !verification.validateMobileNo(phone)) {
             validUser = false;

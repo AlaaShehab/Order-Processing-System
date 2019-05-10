@@ -46,8 +46,7 @@ public class UserActivitiesController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         mActivity = new ManagerActivities();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource(
-                "view/SignIn.fxml"));
+        loader.setLocation(getClass().getResource("View/SignIn.fxml"));
         Parent root;
         try {
             root = (Parent) loader.load();
@@ -60,7 +59,7 @@ public class UserActivitiesController implements Initializable {
         } else {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource(
-                    "view/SignUp.fxml"));
+                    "View/SignUp.fxml"));
             Parent parentRoot;
             try {
                 parentRoot = (Parent) fxmlLoader.load();
@@ -140,7 +139,7 @@ public class UserActivitiesController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("View/AddModifyBook.fxml"));
         Scene scene = new Scene(root);
         Stage app_stage = new Stage();
-        app_stage.setTitle("Place Order");
+        app_stage.setTitle("Add/Modify Book");
         app_stage.setScene(scene);
         app_stage.show();
     }
