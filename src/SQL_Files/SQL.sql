@@ -30,7 +30,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `OrderOnlineProcessing`.`Book` (
   `ISBN` INT UNSIGNED NOT NULL,
   `title` VARCHAR(300) NOT NULL,
-  `publication_year` DATE NULL DEFAULT NULL,
+  `publication_year` int DEFAULT NULL,
   `price` DOUBLE NOT NULL DEFAULT 10,
   `threshold` INT NOT NULL DEFAULT 0,
   `copies` INT NOT NULL DEFAULT 0,
@@ -124,9 +124,12 @@ CREATE TABLE IF NOT EXISTS `OrderOnlineProcessing`.`User` (
   `phone_number` VARCHAR(45) NOT NULL,
   `shipping_address` VARCHAR(100) NOT NULL,
   `is_manger` TINYINT(1) NOT NULL DEFAULT 0,
-  `email` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100) NOT NULL UNIQUE,
   `user_name` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`user_id`))
+  PRIMARY KEY (`user_id`),
+  INDEX `EMAIL_INDEX` (`email` ASC)
+  )
+  
 ENGINE = InnoDB;
 
 
@@ -237,3 +240,4 @@ DELIMITER ;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+ALTER TABLE User ADD UNIQUE (email, user_name);

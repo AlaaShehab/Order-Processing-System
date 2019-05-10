@@ -5,8 +5,8 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DB"/>
 	<queryString language="SQL">
 		<![CDATA[Select title, ISBN, Sum(quantity) as totalSales
-from book natural join order_Item
-natural join cunstomer_order
+from Book natural join ORDER_ITEM
+natural join CUNSTOMER_ORDER
 where DATEDIFF(sale_date,current_date()) <= 30
 group by ISBN;]]>
 	</queryString>

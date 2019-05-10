@@ -5,8 +5,8 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DB"/>
 	<queryString language="SQL">
 		<![CDATA[Select title, ISBN, Sum(quantity) as totalbooks
-			from book natural join order_Item
-			natural join cunstomer_order
+			from Book natural join ORDER_ITEM
+			natural join CUNSTOMER_ORDER
 			where DATEDIFF(sale_date,current_date()) <= 90
 			group by ISBN
 			order by totalbooks DESC LIMIT 10;]]>
@@ -19,7 +19,7 @@
 		<property name="com.jaspersoft.studio.field.label" value="title"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="Book"/>
 	</field>
-	<field name="S" class="java.math.BigDecimal">
+	<field name="totalbooks" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.label" value="totalbooks"/>
 	</field>
 	<background>
@@ -65,7 +65,7 @@
 			</textField>
 			<textField>
 				<reportElement x="440" y="-1" width="100" height="30"/>
-				<textFieldExpression><![CDATA[$F{S}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{totalbooks}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
