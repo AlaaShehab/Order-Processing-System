@@ -1,5 +1,4 @@
 package Backend;
-import com.sun.org.apache.regexp.internal.RE;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -18,10 +17,11 @@ public class UsersActivities {
     }
 
     public void editInfo(User user) throws SQLException {//send info as parameters
+        // TODO print error message in gui when modifying email with existing value
         String query = "UPDATE USER SET user_id = "+ user.getUserID() + ", passowrd = '" + user.getPassword()
                 + "', first_name = '" + user.getFirstName() + "', last_name = '" + user.getLastName()
-                + "', email = '" + user.getEmail() + "', phoneNumber = '" + user.getPhoneNumber()
-                + ", shipping_address = " + user.getShippingAddress()
+                + "', email = '" + user.getEmail() + "', phone_number = '" + user.getPhoneNumber()
+                + "', shipping_address = '" + user.getShippingAddress()
                 + "' WHERE user_id = " + user.getUserID() + ";";
         try {
             connection.setAutoCommit(false);
@@ -42,7 +42,7 @@ public class UsersActivities {
             connection.setAutoCommit(true);
 
         }
-    } // test
+    }
 
     public List<Book> searchForBookByISBN(String bookISBN) throws SQLException {
         List<Book> books = new ArrayList<Book>();
@@ -52,8 +52,8 @@ public class UsersActivities {
             String query = "Select * from BOOK where ISBN ="+bookISBN+";";
             ResultSet rs = stat.executeQuery(query);
             while (rs.next()) {
-                int ISBN, noOfCopies, threshold;
-                String title, publisherName, publicationYear;
+                int ISBN, noOfCopies, threshold, publicationYear;
+                String title, publisherName;
                 double price;
                 ISBN = rs.getInt("ISBN");
                 noOfCopies = rs.getInt("copies");
@@ -61,14 +61,14 @@ public class UsersActivities {
                 title = rs.getNString("title");
                 publisherName = rs.getNString("publisher_name");
                 DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
-                publicationYear = df.format(rs.getDate("publication_year"));
+                publicationYear = rs.getInt("publication_year");
                 price = rs.getDouble("price");
                 Book book = new Book();
                 book.setISBN(ISBN);
                 book.setNoOfCopies(noOfCopies);
                 book.setThreshold(threshold);
                 book.setPrice(price);
-                book.setPublicationYear(publicationYear);
+                book.setPublicationYear(String.valueOf(publicationYear));
                 book.setTitle(title);
                 book.setPublisherName(publisherName);
                 books.add(book);
@@ -99,8 +99,8 @@ public class UsersActivities {
             String query = "Select * from BOOK where Title ='"+bookTitle+"';";
             ResultSet rs = stat.executeQuery(query);
             while (rs.next()) {
-                int ISBN, noOfCopies, threshold;
-                String title, publisherName, publicationYear;
+                int ISBN, noOfCopies, threshold, publicationYear;
+                String title, publisherName;
                 double price;
                 ISBN = rs.getInt("ISBN");
                 noOfCopies = rs.getInt("copies");
@@ -108,14 +108,14 @@ public class UsersActivities {
                 title = rs.getNString("title");
                 publisherName = rs.getNString("publisher_name");
                 DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
-                publicationYear = df.format(rs.getDate("publication_year"));
+                publicationYear = rs.getInt("publication_year");
                 price = rs.getDouble("price");
                 Book book = new Book();
                 book.setISBN(ISBN);
                 book.setNoOfCopies(noOfCopies);
                 book.setThreshold(threshold);
                 book.setPrice(price);
-                book.setPublicationYear(publicationYear);
+                book.setPublicationYear(String.valueOf(publicationYear));
                 book.setTitle(title);
                 book.setPublisherName(publisherName);
                 books.add(book);
@@ -146,8 +146,8 @@ public class UsersActivities {
             String query = "Select * from BOOK NATURAL JOIN AUTHOR where author_name ='"+author_name+"';";
             ResultSet rs = stat.executeQuery(query);
             while (rs.next()) {
-                int ISBN, noOfCopies, threshold;
-                String title, publisherName, publicationYear;
+                int ISBN, noOfCopies, threshold, publicationYear;
+                String title, publisherName;
                 double price;
                 ISBN = rs.getInt("ISBN");
                 noOfCopies = rs.getInt("copies");
@@ -155,14 +155,14 @@ public class UsersActivities {
                 title = rs.getNString("title");
                 publisherName = rs.getNString("publisher_name");
                 DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
-                publicationYear = df.format(rs.getDate("publication_year"));
+                publicationYear = rs.getInt("publication_year");
                 price = rs.getDouble("price");
                 Book book = new Book();
                 book.setISBN(ISBN);
                 book.setNoOfCopies(noOfCopies);
                 book.setThreshold(threshold);
                 book.setPrice(price);
-                book.setPublicationYear(publicationYear);
+                book.setPublicationYear(String.valueOf(publicationYear));
                 book.setTitle(title);
                 book.setPublisherName(publisherName);
                 books.add(book);
@@ -193,8 +193,8 @@ public class UsersActivities {
             String query = "Select * from BOOK NATURAL JOIN CATEGORY where category_name ='"+category+"';";
             ResultSet rs = stat.executeQuery(query);
             while (rs.next()) {
-                int ISBN, noOfCopies, threshold;
-                String title, publisherName, publicationYear;
+                int ISBN, noOfCopies, threshold, publicationYear;
+                String title, publisherName;
                 double price;
                 ISBN = rs.getInt("ISBN");
                 noOfCopies = rs.getInt("copies");
@@ -202,14 +202,14 @@ public class UsersActivities {
                 title = rs.getNString("title");
                 publisherName = rs.getNString("publisher_name");
                 DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
-                publicationYear = df.format(rs.getDate("publication_year"));
+                publicationYear = rs.getInt("publication_year");
                 price = rs.getDouble("price");
                 Book book = new Book();
                 book.setISBN(ISBN);
                 book.setNoOfCopies(noOfCopies);
                 book.setThreshold(threshold);
                 book.setPrice(price);
-                book.setPublicationYear(publicationYear);
+                book.setPublicationYear(String.valueOf(publicationYear));
                 book.setTitle(title);
                 book.setPublisherName(publisherName);
                 books.add(book);
@@ -240,8 +240,8 @@ public class UsersActivities {
             String query = "Select * from BOOK where publication_year ='"+year+"';";
             ResultSet rs = stat.executeQuery(query);
             while (rs.next()) {
-                int ISBN, noOfCopies, threshold;
-                String title, publisherName, publicationYear;
+                int ISBN, noOfCopies, threshold, publicationYear;
+                String title, publisherName;
                 double price;
                 ISBN = rs.getInt("ISBN");
                 noOfCopies = rs.getInt("copies");
@@ -249,14 +249,14 @@ public class UsersActivities {
                 title = rs.getNString("title");
                 publisherName = rs.getNString("publisher_name");
                 DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
-                publicationYear = df.format(rs.getDate("publication_year"));
+                publicationYear = rs.getInt("publication_year");
                 price = rs.getDouble("price");
                 Book book = new Book();
                 book.setISBN(ISBN);
                 book.setNoOfCopies(noOfCopies);
                 book.setThreshold(threshold);
                 book.setPrice(price);
-                book.setPublicationYear(publicationYear);
+                book.setPublicationYear(String.valueOf(publicationYear));
                 book.setTitle(title);
                 book.setPublisherName(publisherName);
                 books.add(book);
