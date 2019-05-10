@@ -61,7 +61,6 @@ public class UsersActivities {
                 threshold = rs.getInt("threshold");
                 title = rs.getNString("title");
                 publisherName = rs.getNString("publisher_name");
-                DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
                 publicationYear = rs.getInt("publication_year");
                 price = rs.getDouble("price");
                 Book book = new Book();
@@ -120,7 +119,6 @@ public class UsersActivities {
                 threshold = rs.getInt("threshold");
                 title = rs.getNString("title");
                 publisherName = rs.getNString("publisher_name");
-                DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
                 publicationYear = rs.getInt("publication_year");
                 price = rs.getDouble("price");
                 Book book = new Book();
@@ -179,7 +177,6 @@ public class UsersActivities {
                 threshold = rs.getInt("threshold");
                 title = rs.getNString("title");
                 publisherName = rs.getNString("publisher_name");
-                DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
                 publicationYear = rs.getInt("publication_year");
                 price = rs.getDouble("price");
                 Book book = new Book();
@@ -238,7 +235,6 @@ public class UsersActivities {
                 threshold = rs.getInt("threshold");
                 title = rs.getNString("title");
                 publisherName = rs.getNString("publisher_name");
-                DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
                 publicationYear = rs.getInt("publication_year");
                 price = rs.getDouble("price");
                 Book book = new Book();
@@ -297,7 +293,6 @@ public class UsersActivities {
                 threshold = rs.getInt("threshold");
                 title = rs.getNString("title");
                 publisherName = rs.getNString("publisher_name");
-                DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
                 publicationYear = rs.getInt("publication_year");
                 price = rs.getDouble("price");
                 Book book = new Book();

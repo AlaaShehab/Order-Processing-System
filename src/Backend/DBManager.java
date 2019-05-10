@@ -16,7 +16,7 @@ public class DBManager {
 
     public static synchronized DBManager getInstance() {
         username = "root";
-        password = "adam.glambert_4";
+        password = "root";
         if(instance == null) {
             instance = new DBManager();
         }
