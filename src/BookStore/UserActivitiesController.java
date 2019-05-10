@@ -57,20 +57,20 @@ public class UserActivitiesController implements Initializable {
         SignInController controller = loader.getController();
         if (controller.getUser() != null) {
             user = controller.getUser();
-            return;
+        } else {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource(
+                    "view/SignUp.fxml"));
+            Parent parentRoot;
+            try {
+                parentRoot = (Parent) fxmlLoader.load();
+            } catch (Exception e) {
+
+            }
+            SignUpController ucontroller = fxmlLoader.getController();
+            user = ucontroller.getUser();
         }
 
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource(
-                "view/SignUp.fxml"));
-        Parent parentRoot;
-        try {
-            parentRoot = (Parent) fxmlLoader.load();
-        } catch (Exception e) {
-
-        }
-        SignUpController ucontroller = fxmlLoader.getController();
-        user = ucontroller.getUser();
         //disable some of user functions if not manager
         if (user.isManager() == 0) {
             promoteMI.setDisable(true);
@@ -93,9 +93,7 @@ public class UserActivitiesController implements Initializable {
 
         addToCartBtn.setOnAction(new AddItemsListener());
 
-        //just for testing
         searchedBooks = new ArrayList<>();
-
     }
 
     public User getUser () {
@@ -217,6 +215,7 @@ public class UserActivitiesController implements Initializable {
 
     @FXML
     private void SearchBookHandler (ActionEvent event) throws Exception{
+
         UsersActivities uActivity = new UsersActivities();
 
         if (menuItemSelected.equals("Book ISBN")) {
@@ -230,6 +229,7 @@ public class UserActivitiesController implements Initializable {
         } else {
             searchedBooks = uActivity.searchForBookByCategory(searchValue.getText());
         }
+
 
         booksTable.setItems(FXCollections.observableList(new ArrayList<>()));
         booksTable.getItems().addAll(getTableData());
