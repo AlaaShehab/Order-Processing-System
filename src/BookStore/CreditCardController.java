@@ -39,7 +39,7 @@ public class CreditCardController {
         if (verifyCreditcard()) {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(
-                    "view/UserCart.fxml"));
+                    "View/UserCart.fxml"));
             Parent root = (Parent) loader.load();
             UserCartController controller = loader.getController();
             User user = controller.getUser();

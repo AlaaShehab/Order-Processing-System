@@ -44,7 +44,7 @@ public class EditProfileController implements Initializable {
         verification = new UserVerification();
         loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(
-                "view/UserActivities.fxml"));
+                "View/UserActivities.fxml"));
         Parent root;
         try {
             root = (Parent) loader.load();
