@@ -1,12 +1,11 @@
 package Backend;
 import com.sun.org.apache.regexp.internal.RE;
 
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 import java.sql.*;
-import java.util.ArrayList;
 
 public class UsersActivities {
 
@@ -18,7 +17,7 @@ public class UsersActivities {
     }
 
     public void editInfo(User user) throws SQLException {//send info as parameters
-        String query = "UPDATE USER SET user_id = "+ user.getUserID() + ", passowrd = '" + user.getPassword()
+        String query = "UPDATE User SET user_id = "+ user.getUserID() + ", passowrd = '" + user.getPassword()
                 + "', first_name = '" + user.getFirstName() + "', last_name = '" + user.getLastName()
                 + "', email = '" + user.getEmail() + "', phoneNumber = '" + user.getPhoneNumber()
                 + ", shipping_address = " + user.getShippingAddress()
@@ -49,7 +48,7 @@ public class UsersActivities {
         try{
             connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
-            String query = "Select * from BOOK where ISBN ="+bookISBN+";";
+            String query = "Select * from Book where ISBN ="+bookISBN+";";
             ResultSet rs = stat.executeQuery(query);
             while (rs.next()) {
                 int ISBN, noOfCopies, threshold;
@@ -96,7 +95,7 @@ public class UsersActivities {
         try{
             connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
-            String query = "Select * from BOOK where Title ='"+bookTitle+"';";
+            String query = "Select * from Book where Title ='"+bookTitle+"';";
             ResultSet rs = stat.executeQuery(query);
             while (rs.next()) {
                 int ISBN, noOfCopies, threshold;
@@ -143,7 +142,7 @@ public class UsersActivities {
         try{
             connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
-            String query = "Select * from BOOK NATURAL JOIN AUTHOR where author_name ='"+author_name+"';";
+            String query = "Select * from Book NATURAL JOIN Author where author_name ='"+author_name+"';";
             ResultSet rs = stat.executeQuery(query);
             while (rs.next()) {
                 int ISBN, noOfCopies, threshold;
@@ -190,7 +189,7 @@ public class UsersActivities {
         try{
             connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
-            String query = "Select * from BOOK NATURAL JOIN CATEGORY where category_name ='"+category+"';";
+            String query = "Select * from Book NATURAL JOIN Category where category_name ='"+category+"';";
             ResultSet rs = stat.executeQuery(query);
             while (rs.next()) {
                 int ISBN, noOfCopies, threshold;
@@ -237,7 +236,7 @@ public class UsersActivities {
         try{
             connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
-            String query = "Select * from BOOK where publication_year ='"+year+"';";
+            String query = "Select * from Book where publication_year ="+year+";";
             ResultSet rs = stat.executeQuery(query);
             while (rs.next()) {
                 int ISBN, noOfCopies, threshold;
@@ -284,7 +283,7 @@ public class UsersActivities {
         try{
             connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
-            String query = "Select price from BOOK where ISBN="+ISBN+";";
+            String query = "Select price from Book where ISBN="+ISBN+";";
             ResultSet rs = stat.executeQuery(query);
             if (rs.next()){
                 price =  rs.getDouble("price");
@@ -315,17 +314,39 @@ public class UsersActivities {
         try{
             connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
-            String query = "Select SUM(price) from BOOK where ISBN IN (";
+            String query = "Select price from Book where ISBN IN (";
             for (int i = 0; i < cart.size(); i++) {
-                query = query + "'" +cart.get(i).getISBN() + "'";
+                query = query + cart.get(i).getISBN() ;
                 if (i < cart.size() - 1) {
                     query +=",";
                 }
             }
             query +=")";
             ResultSet rs = stat.executeQuery(query);
-            price = rs.getDouble(1);
-            //display price
+            int i = 0;
+            Collections.sort(cart, new Comparator<Book>() {
+
+                public int compare(Book b1, Book b2) {
+
+                    //ascending order
+                    int startComparison = compare(b1.getISBN(), b2.getISBN());
+                    return startComparison != 0 ? startComparison: compare(b1.getISBN(), b2.getISBN());
+                    //descending order
+                    //return fruitName2.compareTo(fruitName1);
+                }
+                private  int compare(int a, int b) {
+                    return a < b ? -1
+                            : a > b ? 1
+                            : 0;
+                }
+
+
+            });
+            while (rs.next() & i < cart.size()) {
+                price += (rs.getDouble(1) * cart.get(i).getNoOfCopies());
+                i++;
+                //display price
+            }
             connection.commit();
         }  catch (SQLException e) {
             e.printStackTrace();
@@ -348,7 +369,7 @@ public class UsersActivities {
         //place order
         try {
             connection.setAutoCommit(false);
-            String query = "INSERT INTO Cunstomer_Order VALUES ( 0 ," + user.getUserID() +
+            String query = "INSERT INTO CUNSTOMER_ORDER VALUES ( 0 ," + user.getUserID() +
                     ", '" +new java.sql.Date(Calendar.getInstance().getTime().getTime()) + "' );";
             Statement stat_1 = connection.createStatement();
             int order = 0;
@@ -361,11 +382,11 @@ public class UsersActivities {
             if(success > 0) {
 
                 for (int i = 0; i < user.getCart().size(); i++) {
-                    String query_2 = "INSERT INTO Order_item VALUES (" + user.getCart().get(i).getISBN()
+                    String query_2 = "INSERT INTO ORDER_ITEM VALUES (" + user.getCart().get(i).getISBN()
                             + ", " + user.getCart().get(i).getNoOfCopies() + ", " + String.valueOf(order) +");";
                     Statement stat = connection.createStatement();
                     int success_2 =  stat.executeUpdate(query_2);
-                    String updateQuery = "UPDATE BOOK SET copies = copies - " + user.getCart().get(i).getNoOfCopies()
+                    String updateQuery = "UPDATE Book SET copies = copies - " + user.getCart().get(i).getNoOfCopies()
                             + " Where ISBN = " + user.getCart().get(i).getISBN() + ";";
                     Statement stat_3 = connection.createStatement();
                     stat_3.executeUpdate(updateQuery);
@@ -393,12 +414,12 @@ public class UsersActivities {
         user.clearCart();
     }
 
-    public User userSignIn(String email, String password) throws SQLException{
+    public User userSignIn(String username, String password) throws SQLException{
         User user = new User();
         try {
             connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
-            String query = "Select * from User where email='" + email +"' and passowrd='" + password+"';";
+            String query = "Select * from User where user_name='" + username +"' and passowrd='" + password+"';";
             ResultSet rs = stat.executeQuery(query);
             connection.commit();
             if (rs.next()) {
@@ -438,7 +459,7 @@ public class UsersActivities {
     }
 
     public User userSignUp(User user) throws SQLException{
-        String checkQuery = "SELECT email FROM USER WHERE email = '" + user.getEmail() + "';";
+        String checkQuery = "SELECT email FROM User WHERE email = '" + user.getEmail() + "';";
         try {
             connection.setAutoCommit(false);
             Statement stat = connection.createStatement();
@@ -449,7 +470,7 @@ public class UsersActivities {
                 //Email is used
                 user = null;
             } else {
-                String insertQuery = "INSERT INTO USER VALUES (" +user.getUserID()+ ",'"+ user.getPassword()
+                String insertQuery = "INSERT INTO User VALUES (" +user.getUserID()+ ",'"+ user.getPassword()
                         + "', '" + user.getFirstName() + "', '" + user.getLastName()
                         + "', '" + user.getPhoneNumber() + "', '" + user.getShippingAddress()
                         + "', " + user.isManager() + ",'" + user.getEmail() + "','" +user.getUserName() +"');";
@@ -473,4 +494,5 @@ public class UsersActivities {
         }
         return user;
     }
+
 }

@@ -84,7 +84,21 @@ public class User {
     }
 
     public void insertItem(Book item) {
-        cart.add(item);
+        int i = findInCart(item.getISBN());
+        if(i == -1) {
+            cart.add(item);
+        }else {
+            cart.get(i).setNoOfCopies(cart.get(i).getNoOfCopies()+ item.getNoOfCopies());
+        }
+
+    }
+
+    private int findInCart(int isbn) {
+        for (int i = 0; i < this.cart.size(); i++) {
+            if (cart.get(i).getISBN() == isbn)
+                return i;
+        }
+        return -1;
     }
 
     public void removeItem (Book item) {

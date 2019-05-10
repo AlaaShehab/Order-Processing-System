@@ -12,11 +12,11 @@ public class DBManager {
     static private DBManager instance;
 
     private String url = "jdbc:mysql://localhost:3306/OrderOnlineProcessing?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true";
-    private Connection connection;
+    private static Connection connection;
 
     public static synchronized DBManager getInstance() {
         username = "root";
-        password = "8121995";
+        password = "adam.glambert_4";
         if(instance == null) {
             instance = new DBManager();
         }
