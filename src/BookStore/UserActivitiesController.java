@@ -137,7 +137,7 @@ public class UserActivitiesController implements Initializable {
         //then we return to homepage
         Parent parent = FXMLLoader.load(getClass().getResource("View/HomePage.fxml"));
         Scene scene = new Scene(parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage app_stage = (Stage) menu.getScene().getWindow();
         app_stage.setScene(scene);
         app_stage.show();
     }
