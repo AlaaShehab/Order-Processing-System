@@ -72,6 +72,7 @@ public class UserCartController implements Initializable {
         UserActivitiesController controller = loader.getController();
         user = controller.getUser();
 
+
         //this is just for testing
       //  dummyTrial();
         refresh ();
@@ -107,10 +108,6 @@ public class UserCartController implements Initializable {
 
     public List<Book> getCartItems () {
         return user.getCart();
-    }
-
-    public void clearList () {
-        user.clearCart();
     }
 
     public void refresh () {
