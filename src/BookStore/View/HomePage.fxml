@@ -21,12 +21,12 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <Button id="signInbtn" alignment="CENTER" mnemonicParsing="false" onAction="#signInHandler" prefHeight="39.0" prefWidth="88.0" text="Sign In" GridPane.rowIndex="1">
+      <Button id="signInbtn" alignment="CENTER" mnemonicParsing="false" onAction="#signInHandler" prefHeight="49.0" prefWidth="112.0" text="Sign In" GridPane.rowIndex="1">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button id="signUpbtn" mnemonicParsing="false" onAction="#signUpHandler" prefHeight="39.0" prefWidth="88.0" text="Sign Up" GridPane.rowIndex="2">
+      <Button id="signUpbtn" mnemonicParsing="false" onAction="#signUpHandler" prefHeight="45.0" prefWidth="113.0" text="Sign Up" GridPane.rowIndex="2">
          <font>
             <Font size="18.0" />
          </font>
